@@ -1,13 +1,27 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>Home</title>
+    <style>
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
 </head>
 <body>
     <h1>Welcome to the Home Page</h1>
     <p>This is the home page of your application.</p>
     <button onclick="window.location.href='http://localhost:8000/pokedex/'">Go to pokedex</button>
     <button onclick="window.location.href='http://localhost:8000/team/'">Go to Team</button>
+    <div class="logo-container">
+        <img src="{% static 'img/pokemonlogo.svg' %}" alt="pokemon logo">
+        <img src="{% static 'img/pokedex.svg' %}" alt="pokedex logo">
+    </div>
+    <img src="{% static 'img/box_menu.svg' %}" alt="pokedex logo">
 </body>
 </html>
+
 
