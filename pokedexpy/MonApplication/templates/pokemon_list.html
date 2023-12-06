@@ -1,11 +1,42 @@
 <!DOCTYPE html>
 <html>
+	<head>
+		<title>Pokedex</title>
+		<style>
+			.banner {
+				background-color: red;
+				padding: 10px;
+			}
+
+			.button {
+				background-color: white;
+				color: red;
+				border: 2px solid red;
+				padding: 10px;
+				text-decoration: none;
+			}
+		</style>
+	</head>
 	<body>
+		<div class="banner">
+			<a href="{% url 'team' %}" class="button">Créer une équipe</a>
+		</div>
 		<h1>Liste de Pokémon</h1>
-		<ul>
+		<div class="card">
 			{% for pokemon in pokemon_list %}
-			<li>{{ pokemon.name }}</li>
+			<div class="card">
+				<img src="{{ pokemon.sprite}}" alt="{{ pokemon.name }} sprite" />
+				<span>{{ pokemon.name }}</span>
+				<table>
+					{% for stat in pokemon.stats %}
+					<tr>
+						<td>{{ stat.name }}</td>
+						<td>{{ stat.value }}</td>
+					</tr>
+					{% endfor %}
+				</table>
+			</div>
 			{% endfor %}
-		</ul>
+		</div>
 	</body>
 </html>
