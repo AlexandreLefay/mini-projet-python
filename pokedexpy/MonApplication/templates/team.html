@@ -3,25 +3,10 @@
 <html>
 	<head>
 		<title>Affichage des équipes</title>
-		<style>
-			.banner {
-				background-color: red;
-				padding: 10px;
-			}
-
-			.button {
-				background-color: white;
-				color: red;
-				border: 2px solid red;
-				padding: 10px;
-				text-decoration: none;
-			}
-		</style>
 	</head>
 	<body>
-		<div class="banner">
-			<a href="{% url 'accueil' %}" class="button">Créer une équipe</a>
-		</div>
 		<h1>Affichage des équipes</h1>
+		<button onclick="window.location.href='http://localhost:8000'">Go to home</button>
+		<button onclick="window.location.href='http://localhost:8000/pokedex/'">Go to pokedex</button>
 	</body>
 </html>
