@@ -36,7 +36,7 @@ Il faut juste rajouter ce qu'il nous faut dans le dictionnaire pokemon
     """
 def fetch_pokemon_data():
     pokemon_data = []
-    for i in range(1, 12):
+    for i in range(1, 151):
         response = requests.get(f"https://pokeapi.co/api/v2/pokemon/{i}")
         if response.status_code == 200:
             data = response.json()
@@ -46,7 +46,7 @@ def fetch_pokemon_data():
                 'attack': data['stats'][1]['base_stat'],
                 'weight': data['weight'],
                 'hp': data['stats'][0]['base_stat'],
-                'sprite_front': data['sprites']['front_default']
+                'sprite_front': data['sprites']['front_default'],
             }
             pokemon_data.append(pokemon)
     return pokemon_data

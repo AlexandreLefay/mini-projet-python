@@ -3,16 +3,24 @@
 <html>
 	<head>
 		<title>Pokedex</title>
-		<link rel="stylesheet" type="text/css" href="{% static 'css/pokedex.css' %}">
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="{% static 'css/pokedex.css' %}"
+		/>
 	</head>
 	<body>
 		<h1>Page Pokedex</h1>
-		<button onclick="window.location.href='http://localhost:8000'">Go to home</button>
-		<button onclick="window.location.href='http://localhost:8000/team/'">Go to Team</button>
+		<button onclick="window.location.href='http://localhost:8000'">
+			Go to home
+		</button>
+		<button onclick="window.location.href='http://localhost:8000/team/'">
+			Go to Team
+		</button>
 		<div class="pokemon-container">
 			{% for pokemon in pokemon_data %}
 			<div class="pokemon-card">
-				<img src="{{ pokemon.sprite_front }}" alt="{{ pokemon.name }} sprite">
+				<img src="{{ pokemon.sprite_front }}" alt="{{ pokemon.name }} sprite" />
 				<div class="pokemon-image">
 					<h2>{{ pokemon.name }}</h2>
 				</div>
