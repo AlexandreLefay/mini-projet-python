@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 import requests
 from django.shortcuts import render
 import requests
@@ -33,20 +33,45 @@ def get_cached_pokemon_data():
     """
 On recupere les données de l'API pokemon
 Il faut juste rajouter ce qu'il nous faut dans le dictionnaire pokemon
-    """
+    """ 
 def fetch_pokemon_data():
-    pokemon_data = []
-    for i in range(1, 151):
-        response = requests.get(f"https://pokeapi.co/api/v2/pokemon/{i}")
-        if response.status_code == 200:
-            data = response.json()
-            pokemon = {
-                'name': data['name'],
-                'type': data['types'][0]['type']['name'],
-                'attack': data['stats'][1]['base_stat'],
-                'weight': data['weight'],
-                'hp': data['stats'][0]['base_stat'],
-                'sprite_front': data['sprites']['front_default'],
-            }
-            pokemon_data.append(pokemon)
-    return pokemon_data
+    response = requests.get('https://pokeapi.co/api/v2/pokemon?limit=151')
+    if response.status_code == 200:
+        data = response.json()
+        pokemon_data = [{'name': pokemon['name'],
+                        'id': i,
+                        'sprite_front': f"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{i}.png"}
+                        for i, pokemon in enumerate(data['results'], start=1)]
+        return pokemon_data
+    else:
+        return None
+    # pokemon_data = []
+    # for i in range(1, 151):
+    #     response = requests.get(f"https://pokeapi.co/api/v2/pokemon/{i}")
+    #     if response.status_code == 200:
+    #         data = response.json()
+    #         pokemon = {
+    #             'name': data['name'],
+    #             'type': data['types'][0]['type']['name'],
+    #             'attack': data['stats'][1]['base_stat'],
+    #             'weight': data['weight'],
+    #             'hp': data['stats'][0]['base_stat'],
+    #             'sprite_front': data['sprites']['front_default'],
+    #         }
+    #         pokemon_data.append(pokemon)
+    # return pokemon_data
+
+
+
+
+# def create_team(request):
+#     team = []
+#     for _ in range(6):
+#         # pokemon_id = generate a random Pokemon ID or get it from the user input
+#         pokemon_data = requests.get(f'https://pokeapi.co/api/v2/pokemon/{pokemon_id}').json()
+#         team.append({
+#             'name': pokemon_data['name'],
+#             'types': [t['type']['name'] for t in pokemon_data['types']]
+#             # you can include more details as per your requirement
+#         })
+#     return JsonResponse({'team': team})
