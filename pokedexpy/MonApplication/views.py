@@ -1,10 +1,7 @@
-from django.http import HttpResponse, JsonResponse
-import requests
-from django.shortcuts import render
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 import requests
 from django.shortcuts import render
 from django.core.cache import cache
-
 
 def home(request):
     return render(request, 'home.html')
@@ -37,14 +34,20 @@ Il faut juste rajouter ce qu'il nous faut dans le dictionnaire pokemon
 def fetch_pokemon_data():
     response = requests.get('https://pokeapi.co/api/v2/pokemon?limit=151')
     if response.status_code == 200:
+        pokemons = {}
         data = response.json()
+        for i in range(151):
+            pokemons[i+1] = data["results"][i]["name"]
+        #print(pokemons)
         pokemon_data = [{'name': pokemon['name'],
                         'id': i,
                         'sprite_front': f"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{i}.png"}
                         for i, pokemon in enumerate(data['results'], start=1)]
+        #print(pokemon_data)
         return pokemon_data
     else:
         return None
+    
     # pokemon_data = []
     # for i in range(1, 151):
     #     response = requests.get(f"https://pokeapi.co/api/v2/pokemon/{i}")
@@ -62,16 +65,14 @@ def fetch_pokemon_data():
     # return pokemon_data
 
 
-
-
-# def create_team(request):
-#     team = []
-#     for _ in range(6):
-#         # pokemon_id = generate a random Pokemon ID or get it from the user input
-#         pokemon_data = requests.get(f'https://pokeapi.co/api/v2/pokemon/{pokemon_id}').json()
-#         team.append({
-#             'name': pokemon_data['name'],
-#             'types': [t['type']['name'] for t in pokemon_data['types']]
-#             # you can include more details as per your requirement
-#         })
-#     return JsonResponse({'team': team})
+def create_team(request):
+    team = []
+    for _ in range(6):
+        # pokemon_id = generate a random Pokemon ID or get it from the user input
+        pokemon_data = requests.get(f'https://pokeapi.co/api/v2/pokemon/{pokemon_id}').json()
+        team.append({
+            'name': pokemon_data['name'],
+            'types': [t['type']['name'] for t in pokemon_data['types']]
+            # you can include more details as per your requirement
+        })
+    return JsonResponse({'team': team})
