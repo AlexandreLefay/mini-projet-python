@@ -8,23 +8,56 @@
 			type="text/css"
 			href="{% static 'css/pokedex.css' %}"
 		/>
+		<style>
+			.poke-container {
+				align-items: space-between;
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: center;
+				margin: 0 auto;
+				max-width: 1200px;
+			}
+			.popup {
+				display: none;
+				position: fixed;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				background-color: white;
+				padding: 20px;
+				border-radius: 5px;
+				box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+			}
+			.pokemon-card {
+				cursor: pointer;
+			}
+		</style>
 	</head>
+	<script src="{% static 'js/pokedex.js' %}"></script>
 	<body>
-		<h1>Page Pokedex</h1>
 		<button onclick="window.location.href='http://localhost:8000'">
 			Go to home
 		</button>
 		<button onclick="window.location.href='http://localhost:8000/team/'">
 			Go to Team
 		</button>
-		<div class="pokemon-container">
+
+		<div class="poke-container">
 			{% for pokemon in pokemon_data %}
-			<div class="pokemon-card">
+			<div class="pokemon-card" onclick="showPopup('{{ pokemon.id }}')">
 				<img src="{{ pokemon.sprite_front }}" alt="{{ pokemon.name }} sprite" />
 				<div class="pokemon-image">
 					<h2>{{ pokemon.name }}</h2>
 					<p>{{ pokemon.id }}</p>
 				</div>
+			</div>
+			<div
+				id="popup-{{ pokemon.id }}"
+				class="popup"
+				onclick="hidePopup('{{ pokemon.id }}')"
+			>
+				<h2>{{ pokemon.name }}</h2>
+				<p>{{ pokemon.description }}</p>
 			</div>
 			{% endfor %}
 		</div>
