@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Create Team</title>
+	</head>
+	<body>
+		<h1>Create Team</h1>
+		<form action="{% url 'create_team' %}" method="post">
+			{% csrf_token %} Team Name: <input type="text" name="teamName" /><br />
+			<input type="submit" value="Create Team" />
+		</form>
+		{% if teamName %}
+		<h1>Hello, {{ teamName }}!</h1>
+		{% endif %}
+	</body>
+</html>

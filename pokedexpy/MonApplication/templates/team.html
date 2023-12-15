@@ -2,11 +2,27 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Affichage des équipes</title>
+		<title>Vos équipes</title>
 	</head>
 	<body>
-		<h1>Affichage des équipes</h1>
-		<button onclick="window.location.href='http://localhost:8000'">Go to home</button>
-		<button onclick="window.location.href='http://localhost:8000/pokedex/'">Go to pokedex</button>
+		<h1>Vos équipes</h1>
+		<button onclick="window.location.href='http://localhost:8000'">
+			Go to home
+		</button>
+		<button onclick="window.location.href='http://localhost:8000/pokedex/'">
+			Go to pokedex
+		</button>
+
+		{% if teams %}
+		<ul>
+			{% for team in teams %}
+			<li>{{ team.name }}</li>
+			{% endfor %}
+		</ul>
+		{% else %}
+		<div style="background-color: gray; padding: 10px">
+			<a href="http://localhost:8000/create_team">Créer une équipe</a>
+		</div>
+		{% endif %}
 	</body>
 </html>
