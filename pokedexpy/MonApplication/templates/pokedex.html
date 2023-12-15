@@ -29,12 +29,15 @@
 
 		<div class="main-content">
 			<div class="sidebar">
-				<div class="user-info">
+				<div class="pokemon-info">
 					<h2>{{ current_pokemon.name }}</h2>
-					<img
-						src="{{ current_pokemon.sprite_front }}"
-						alt="{{ current_pokemon.name }}"
-					/>
+					<div class="pokemon-selected-image-container">
+						<img class="pokemon-selected-background" src="{% static 'img/pokemon_background.svg' %}" alt="pokemon background" />
+						<img class="pokemon-selected-image"
+							src="{{ current_pokemon.sprite_front }}"
+							alt="{{ current_pokemon.name }}"
+						/>
+					</div>
 					<div class="navigation">
 						<a
 							href="{% url 'pokedex' %}?pokemon_id={{ current_pokemon.id|add:'-1' }}"
