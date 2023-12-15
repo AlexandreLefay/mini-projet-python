@@ -8,30 +8,6 @@
 			type="text/css"
 			href="{% static 'css/pokedex.css' %}"
 		/>
-		<style>
-			.poke-container {
-				align-items: space-between;
-				display: flex;
-				flex-wrap: wrap;
-				justify-content: center;
-				margin: 0 auto;
-				max-width: 1200px;
-			}
-			.popup {
-				display: none;
-				position: fixed;
-				top: 50%;
-				left: 50%;
-				transform: translate(-50%, -50%);
-				background-color: white;
-				padding: 20px;
-				border-radius: 5px;
-				box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-			}
-			.pokemon-card {
-				cursor: pointer;
-			}
-		</style>
 	</head>
 	<script src="{% static 'js/pokedex.js' %}"></script>
 	<body>
@@ -41,34 +17,76 @@
 		<button onclick="window.location.href='http://localhost:8000/team/'">
 			Go to Team
 		</button>
-		<div class="poke-container">
-			<form method="get" action="{% url 'pokedex' %}">
-				<input type="text" name="search" placeholder="Rechercher un Pokémon...">
-				<button type="submit">Rechercher</button>
-				<a href="{% url 'pokedex' %}" class="reset-button">Réinitialiser</a>
-			</form>
-			{% for pokemon in pokemon_data %}
-			<div class="pokemon-card" onclick="showPopup('{{ pokemon.id }}')">
-				<img src="{{ pokemon.sprite_front }}" alt="{{ pokemon.name }} sprite" />
-				<div class="pokemon-image">
-					<h2>{{ pokemon.name }}</h2>
-					<p>{{ pokemon.id }}</p>
+
+		<div class="header">
+			<h1>POKEDEX</h1>
+		</div>
+		<form method="get" action="{% url 'pokedex' %}">
+			<input type="text" name="search" placeholder="Rechercher un Pokémon..." />
+			<button type="submit">Rechercher</button>
+			<a href="{% url 'pokedex' %}" class="reset-button">Réinitialiser</a>
+		</form>
+
+		<div class="main-content">
+			<div class="sidebar">
+				<div class="user-info">
+					<h2>{{ current_pokemon.name }}</h2>
+					<img
+						src="{{ current_pokemon.sprite_front }}"
+						alt="{{ current_pokemon.name }}"
+					/>
+					<div class="navigation">
+						<a
+							href="{% url 'pokedex' %}?pokemon_id={{ current_pokemon.id|add:'-1' }}"
+							>Previous</a
+						>
+						<a
+							href="{% url 'pokedex' %}?pokemon_id={{ current_pokemon.id|add:'1' }}"
+							>Next</a
+						>
+					</div>
+					<p>STAT DU POKEMON SELECT</p>
 				</div>
 			</div>
-			<div
-				id="popup-{{ pokemon.id }}"
-				class="popup"
-				onclick="hidePopup('{{ pokemon.id }}')"
-			>
-				<h2>NOM : {{ pokemon.name }}</h2>
-				<p>TYPES : {{ pokemon.types }}</p>
-				<p>ID : #{{ pokemon.id }}</p>
-				<p>attack :{{ pokemon.moves }}</p>
-				<p>TAILLE : {{ pokemon.height }}</p>
-				<p>HP :{{ pokemon.hp }}</p>
-				<img src="{{ pokemon.sprite_front}}" alt="{{ pokemon.name }} sprite" />
+
+			<div class="collection">
+				<div class="collection-header">
+					<h3>Collection</h3>
+				</div>
+				<div class="collection-grid">
+					{% for pokemon in pokemon_data %}
+					<div class="pokemon-card" onclick="showPopup('{{ pokemon.id }}')">
+						<div class="collection-item">
+							<div>#{{ pokemon.id }}</div>
+							<img
+								src="{{ pokemon.sprite_front }}"
+								alt="{{ pokemon.name }} sprite"
+							/>
+						</div>
+					</div>
+					<div
+						id="popup-{{ pokemon.id }}"
+						class="popup"
+						onclick="hidePopup('{{ pokemon.id }}')"
+					>
+						<h2>NOM : {{ pokemon.name }}</h2>
+						<p>TYPES : {{ pokemon.types }}</p>
+						<p>ID : #{{ pokemon.id }}</p>
+						<p>attack :{{ pokemon.moves }}</p>
+						<p>TAILLE : {{ pokemon.height }}</p>
+						<p>HP :{{ pokemon.hp }}</p>
+						<img
+							src="{{ pokemon.sprite_front}}"
+							alt="{{ pokemon.name }} sprite"
+						/>
+					</div>
+					{% endfor %}
+				</div>
+				<div class="navigation">
+					<button>Previous</button>
+					<button>Next</button>
+				</div>
 			</div>
-			{% endfor %}
 		</div>
 	</body>
 </html>
