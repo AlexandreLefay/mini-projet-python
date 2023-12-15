@@ -61,10 +61,25 @@ body {
     width: 250px;
   }
   
-  .user-info {
+  /* POKEMON SELECTED INFORMATION */
+  .pokemon-info {
     background-color: #f0f8ff;
     padding: 10px;
     margin-bottom: 20px;
+  }
+
+  .pokemon-info .pokemon-selected-image-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  .pokemon-info .pokemon-selected-image-container .pokemon-selected-background {
+    width: 100%
+  }
+
+  .pokemon-info .pokemon-selected-image-container .pokemon-selected-image {
+    position: absolute;
+    transform: translate(0%, 22%);
   }
   
   .button {
