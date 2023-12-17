@@ -6,5 +6,4 @@ urlpatterns = [
     path('', include('MonApplication.urls')),
     path('pokedex/', include('MonApplication.urls')),
     path('team/', include('MonApplication.urls')),
-    path('create_team/', include('MonApplication.urls')),
 ]

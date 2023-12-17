@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Create Team</title>
+		<title>Données en cache</title>
 	</head>
 	<body>
-		<h1>Create Team</h1>
 		<button onclick="window.location.href='http://localhost:8000'">
 			Go to home
 		</button>
@@ -14,12 +13,13 @@
 		<button onclick="window.location.href='http://localhost:8000/cache_data/'">
 			Les données en cache
 		</button>
-		<form action="{% url 'create_team' %}" method="post">
-			{% csrf_token %} Team Name: <input type="text" name="teamName" /><br />
-			<input type="submit"/>
-		</form>
-		{% if teamName %}
-		<h1>NOM DE VOTRE EQUIPE : {{ teamName }}</h1>
+		<h1>Données en cache</h1>
+		{% if team_data %}
+			<p>{{team_data}}</p>
 		{% endif %}
+		{% if pokemon_data %}
+		<p>Les 151 pokemons sont en cache</p>
+		{% endif %}
+
 	</body>
 </html>

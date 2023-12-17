@@ -12,17 +12,20 @@
 		<button onclick="window.location.href='http://localhost:8000/pokedex/'">
 			Go to pokedex
 		</button>
+		<button onclick="window.location.href='http://localhost:8000/cache_data/'">
+			Les données en cache
+		</button>
 
-		{% if teams %}
+		{% if team_data %}
 		<ul>
-			{% for team in teams %}
-			<li>{{ team.name }}</li>
+			{% for team in team_data %}
+			<li>{{ team.teamName }}</li>
 			{% endfor %}
+		{% endif %}
 		</ul>
-		{% else %}
 		<div style="background-color: gray; padding: 10px">
 			<a href="http://localhost:8000/create_team">Créer une équipe</a>
 		</div>
-		{% endif %}
+		
 	</body>
 </html>
