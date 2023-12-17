@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Données en cache</title>
+	</head>
+	<body>
+		<button onclick="window.location.href='http://localhost:8000'">
+			Go to home
+		</button>
+		<button onclick="window.location.href='http://localhost:8000/team/'">
+			Go to Team
+		</button>
+		<button onclick="window.location.href='http://localhost:8000/cache_data/'">
+			Les données en cache
+		</button>
+		<h1>Données en cache</h1>
+		{% if team_data %}
+			<p>{{team_data}}</p>
+		{% endif %}
+		{% if pokemon_data %}
+		<p>Les 151 pokemons sont en cache</p>
+		{% endif %}
+
+	</body>
+</html>

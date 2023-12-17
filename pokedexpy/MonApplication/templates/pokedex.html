@@ -17,6 +17,9 @@
 		<button onclick="window.location.href='http://localhost:8000/team/'">
 			Go to Team
 		</button>
+		<button onclick="window.location.href='http://localhost:8000/cache_data/'">
+			Les données en cache
+		</button>
 
 		<div class="header">
 			<h1>POKEDEX</h1>
@@ -85,10 +88,10 @@
 					</div>
 					{% endfor %}
 				</div>
-				<div class="navigation">
+				{% comment %} <div class="navigation">
 					<button>Previous</button>
 					<button>Next</button>
-				</div>
+				</div> {% endcomment %}
 			</div>
 		</div>
 	</body>

@@ -39,3 +39,15 @@ async def fetch_pokemon_data(pokemon_id=None):
                     # Si un Pokémon spécifique ne peut être récupéré, on continue avec les suivants.
                     continue
             return pokemons
+        
+def get_pokemon_id_from_request(request):
+    return request.GET.get('pokemon_id', 1)
+
+def get_pokemon_by_id(pokemon_data, pokemon_id):
+    return next((pokemon for pokemon in pokemon_data if pokemon['id'] == int(pokemon_id)), pokemon_data[0])
+
+def filter_pokemon_by_query(pokemon_data, request):
+    query = request.GET.get('search', '')
+    if query:
+        return [pokemon for pokemon in pokemon_data if query.lower() in pokemon['name'].lower()]
+    return pokemon_data
