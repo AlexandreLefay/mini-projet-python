@@ -33,6 +33,8 @@ async def pokedex(request):
 # Vue pour afficher nos équipes Pokémon
 async def team(request):
     team_data = await get_cached_team_data()
+    test = request.GET.get('team_id', 1)
+    print(test)
     return render(request, 'team.html', {'team_data': team_data})
 
 
