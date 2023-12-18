@@ -18,14 +18,19 @@
 
 		{% if team_data %}
 		<ul>
-			{% for team in team_data %}
-			<li>{{ team.teamName }}</li>
-			{% endfor %}
-		{% endif %}
+			<ul>
+				{% for team in team_data %}
+				<li>
+					<a href="{% url 'detail_team' team.id %}"
+						>{{ team.teamName }}#{{ team.id }}</a
+					>
+				</li>
+				{% endfor %}
+			</ul>
+			{% endif %}
 		</ul>
 		<div style="background-color: gray; padding: 10px">
 			<a href="http://localhost:8000/create_team">Créer une équipe</a>
 		</div>
-		
 	</body>
 </html>

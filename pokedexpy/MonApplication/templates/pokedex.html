@@ -35,8 +35,13 @@
 				<div class="pokemon-info">
 					<h2>{{ current_pokemon.name }}</h2>
 					<div class="pokemon-selected-image-container">
-						<img class="pokemon-selected-background" src="{% static 'img/pokemon_background.svg' %}" alt="pokemon background" />
-						<img class="pokemon-selected-image"
+						<img
+							class="pokemon-selected-background"
+							src="{% static 'img/pokemon_background.svg' %}"
+							alt="pokemon background"
+						/>
+						<img
+							class="pokemon-selected-image"
 							src="{{ current_pokemon.sprite_front }}"
 							alt="{{ current_pokemon.name }}"
 						/>
@@ -88,10 +93,6 @@
 					</div>
 					{% endfor %}
 				</div>
-				{% comment %} <div class="navigation">
-					<button>Previous</button>
-					<button>Next</button>
-				</div> {% endcomment %}
 			</div>
 		</div>
 	</body>

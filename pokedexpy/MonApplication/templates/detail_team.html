@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="{% static 'css/pokedex.css' %}"
+		/>
+		<title>Vos équipes</title>
+	</head>
+	<script src="{% static 'js/detail_team.js' %}"></script>
+	<body>
+		<h1>Equipe :</h1>
+		<button onclick="window.location.href='http://localhost:8000'">
+			Go to home
+		</button>
+		<button onclick="window.location.href='http://localhost:8000/pokedex/'">
+			Go to pokedex
+		</button>
+		<button onclick="window.location.href='http://localhost:8000/cache_data/'">
+			Les données en cache
+		</button>
+		{% for pokemon in pokemon_data_team %}
+		<div class="collection-grid">
+			<div class="pokemon-card">
+				<div class="collection-item">
+					<div>#{{ pokemon.id }}</div>
+					<img
+						src="{{ pokemon.sprite_front }}"
+						alt="{{ pokemon.name }} sprite"
+					/>
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+
+		<div class="collection">
+			<div class="collection-header">
+				<h3>Collection</h3>
+			</div>
+			<div class="collection-grid">
+				{% for pokemon in pokemon_data %}
+				<div
+					class="pokemon-card"
+					onclick="addPokemonToTeam({{ team }}, {{pokemon.id}}, {{team.id}})"
+				>
+					<div class="collection-item">
+						<div>#{{ pokemon.id }}</div>
+						<img
+							src="{{ pokemon.sprite_front }}"
+							alt="{{ pokemon.name }} sprite"
+						/>
+					</div>
+				</div>
+				<div
+					id="popup-{{ pokemon.id }}"
+					class="popup"
+					onclick="hidePopup('{{ pokemon.id }}')"
+				>
+					<h2>NOM : {{ pokemon.name }}</h2>
+					<p>TYPES : {{ pokemon.types }}</p>
+					<p>ID : #{{ pokemon.id }}</p>
+					<p>attack :{{ pokemon.moves }}</p>
+					<p>TAILLE : {{ pokemon.height }}</p>
+					<p>HP :{{ pokemon.hp }}</p>
+					<img
+						src="{{ pokemon.sprite_front}}"
+						alt="{{ pokemon.name }} sprite"
+					/>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+	</body>
+</html>

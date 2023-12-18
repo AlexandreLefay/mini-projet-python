@@ -14,7 +14,7 @@ async def get_cached_pokemon_data():
 # Fonction asynchrone pour obtenir les données d'une équipe en cache
 async def get_cached_team_data():
     team_data = cache.get('team_data')
-    print(team_data)
+    # print(team_data)
     if team_data is None:
         return []
     return team_data

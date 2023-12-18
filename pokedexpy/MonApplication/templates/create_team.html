@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Create Team</title>
-	</head>
-	<body>
-		<h1>Create Team</h1>
-		<button onclick="window.location.href='http://localhost:8000'">
-			Go to home
-		</button>
-		<button onclick="window.location.href='http://localhost:8000/team/'">
-			Go to Team
-		</button>
-		<button onclick="window.location.href='http://localhost:8000/cache_data/'">
-			Les données en cache
-		</button>
-		<form action="{% url 'create_team' %}" method="post">
-			{% csrf_token %} Team Name: <input type="text" name="teamName" /><br />
-			<input type="submit"/>
-		</form>
-		{% if teamName %}
-		<h1>NOM DE VOTRE EQUIPE : {{ teamName }}</h1>
-		{% endif %}
-	</body>
+  <head>
+    <title>Create Team</title>
+  </head>
+  <body>
+    <h1>Create Team</h1>
+    <button onclick="window.location.href='http://localhost:8000'">
+      Go to home
+    </button>
+    <button onclick="window.location.href='http://localhost:8000/team/'">
+      Go to Team
+    </button>
+    <button onclick="window.location.href='http://localhost:8000/cache_data/'">
+      Les données en cache
+    </button>
+    <form action="{% url 'create_team' %}" method="post">
+      {% csrf_token %} Team Name: <input type="text" name="teamName" /><br />
+      <input type="submit" />
+    </form>
+    {% if teamName %}
+    <h1>NOM DE LA NOUVELLE EQUIPE : {{ teamName }}</h1>
+    {% endif %}
+  </body>
 </html>
