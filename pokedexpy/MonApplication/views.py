@@ -17,7 +17,6 @@ from django.shortcuts import render
 def home(request):
     return render(request, 'home.html')
 
-
 # Vue asynchrone pour afficher les données du Pokédex
 async def pokedex(request):
     pokemon_data = await get_cached_pokemon_data()
@@ -31,18 +30,17 @@ async def pokedex(request):
 # Vue pour afficher nos équipes Pokémon
 async def team(request):
     team_data = await get_cached_team_data() #[{'id': 1, 'teamName': 'test', 'pokemon': [1, 2, 3]}, {'id': 2, 'teamName': 'test2', 'pokemon': [1, 2, 3]}]
+
     if request.method == 'GET':
-        team_id = request.GET.get('team_id', 1)
-        print(team_id)
-        team_data = [team for team in team_data if team['id'] != team_id]
-        print(team_data)
-        return render(request, 'team.html', {'team_data': team_data})
-    else:
+        team_id = int(request.GET.get('team_id', 0))
+
+        # Filtrer pour garder les équipes dont l'ID est différent de team_id
+        filtered_teams = [team for team in team_data if team['id'] != team_id]
+
+        cache.set('team_data', filtered_teams, timeout=3600)
+        team_data = await get_cached_team_data()
         return render(request, 'team.html', {'team_data': team_data})
 
-
-# Vue pour créer une équipe Pokémon
-def create_team(request):
     if request.method == 'POST':
         teamName = request.POST.get('teamName')
 
@@ -60,10 +58,9 @@ def create_team(request):
         cache.set('team_data', team_data, timeout=3600)
         cache.set('current_team_id', current_id, timeout=3600)
 
-        return render(request, 'create_team.html', {'teamName': teamName})
+        return render(request, 'team.html', {'team_data': team_data})
     else:
-        return render(request, 'create_team.html')
-
+        return render(request, 'team.html', {'team_data': team_data})
 
 # Vue pour afficher les détails d'une équipe
 async def detail_team(request, team_id):

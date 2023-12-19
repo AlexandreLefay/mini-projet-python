@@ -1,4 +1,3 @@
-<!-- FILEPATH: /Users/alex/Documents/epsi/module python/tp/mini-projet/pokedexpy/MonApplication/templates/team.html -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,9 +29,19 @@
     </ul>
 {% endif %}
 </ul>
-<div style="background-color: gray; padding: 10px">
-    <a href="#" id="createTeamLink">Créer une équipe</a>
-    <input type="text" id="teamNameInput" style="display: none;" placeholder="Entrez le nom de l'équipe">
-</div>
+<a href="#" id="createTeamLink">Créer une équipe</a>
+<form action="{{ request.path }}" method="post" style="display: none;" id="teamForm">
+    {% csrf_token %}
+    Team Name: <input type="text" name="teamName" placeholder="Entrez le nom de l'équipe"/><br/>
+    <input type="submit"/>
+</form>
+
+<script>
+    document.getElementById('createTeamLink').addEventListener('click', function (event) {
+        event.preventDefault();
+        document.getElementById('teamForm').style.display = 'block';
+    });
+</script>
+
 </body>
 </html>
