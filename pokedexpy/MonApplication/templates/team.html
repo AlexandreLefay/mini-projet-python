@@ -1,47 +1,67 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
-<head>
+    <head>
     <title>Vos équipes</title>
-</head>
-<body>
-<h1>Vos équipes</h1>
-<button onclick="window.location.href='http://localhost:8000'">
-    Go to home
-</button>
-<button onclick="window.location.href='http://localhost:8000/pokedex/'">
-    Go to pokedex
-</button>
-<button onclick="window.location.href='http://localhost:8000/cache_data/'">
-    Les données en cache
-</button>
+        <link
+			rel="stylesheet"
+			type="text/css"
+			href="{% static 'css/team.css' %}"
+		/>
+    </head>
+    <body>
+        <h1>Vos équipes</h1>
+        <button onclick="window.location.href='http://localhost:8000'">
+            Go to home
+        </button>
+        <button onclick="window.location.href='http://localhost:8000/pokedex/'">
+            Go to pokedex
+        </button>
+        <button onclick="window.location.href='http://localhost:8000/cache_data/'">
+            Les données en cache
+        </button>
 
-{% if team_data %}
-    <ul>
-    <ul>
-        {% for team in team_data %}
-            <li>
-                <a href="{% url 'detail_team' team.id %}"
-                >{{ team.teamName }}#{{ team.id }}</a
-                >
-                <a href="{{ request.path }}?team_id={{ team.id }}">DELETE</a>
-            </li>
-        {% endfor %}
-    </ul>
-{% endif %}
-</ul>
-<a href="#" id="createTeamLink">Créer une équipe</a>
-<form action="{{ request.path }}" method="post" style="display: none;" id="teamForm">
-    {% csrf_token %}
-    Team Name: <input type="text" name="teamName" placeholder="Entrez le nom de l'équipe"/><br/>
-    <input type="submit"/>
-</form>
+        {% if team_data %}
+            <ul>
+            <ul>
+                {% for team in team_data %}
+                    <li>
+                        <a href="{% url 'detail_team' team.id %}"
+                        >{{ team.teamName }}#{{ team.id }}</a
+                        >
+                        <a href="{{ request.path }}?team_id={{ team.id }}">DELETE</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        </ul>
 
-<script>
-    document.getElementById('createTeamLink').addEventListener('click', function (event) {
-        event.preventDefault();
-        document.getElementById('teamForm').style.display = 'block';
-    });
-</script>
+        <div class="open-btn">
+            <button class="open-button" onclick="openForm()"><strong>Créer une équipe</strong></button>
+        </div>
+        <div class="login-popup">
+            <div id="popupForm" class="form-popup">
+                <form onsubmit="{{ request.path }}" method="post" id="teamForm" class="form-container">
+                {% csrf_token %}
+                <h2>Créer une équipe</h2>
+                <label for="teamname">Team Name: </label>
+                <input type="text" name="teamName" placeholder="Entrez le nom de l'équipe"/><br/>
 
-</body>
+                <button type="submit" class="btn">Ajouter</button>
+                <button type="button" class="btn cancel" onclick="closeForm()">Annuler</button>
+                </form>
+            </div>
+        </div>
+
+        <script>
+            function openForm() {
+                document.getElementById("popupForm").style.display = "block";
+              }
+            function closeForm() {
+                document.getElementById("popupForm").style.display = "none";
+                document.getElementById("popupForm").reset();
+                }
+        </script>
+
+    </body>
 </html>

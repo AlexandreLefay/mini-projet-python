@@ -40,21 +40,27 @@ async def team(request):
         return render(request, 'team.html', {'team_data': team_data})
 
     if request.method == 'POST':
-        teamName = request.POST.get('teamName')
-
+        team_name = request.POST.get('teamName')
         # Récupérer le tableau actuel du cache ou initialiser un nouveau tableau si aucun n'existe
         team_data = cache.get('team_data', [])
 
-        # Récupérer l'ID actuel ou initialiser à 1 si aucun n'existe
-        current_id = cache.get('current_team_id', 0)
-        current_id += 1
+        # Teste l'unicité du nom et le fait qu'il soit renseigné pour éviter les doublons et les bug de refresh
+        teamNameNotExist = True
+        for team in team_data:
+            if team['teamName'] == team_name:
+                teamNameNotExist = False
+        if team_name and teamNameNotExist:
 
-        # Ajouter le nouveau teamName et l'ID au tableau
-        team_data.append({'id': current_id, 'teamName': teamName, 'pokemon': []})
+            # Récupérer l'ID actuel ou initialiser à 1 si aucun n'existe
+            current_id = cache.get('current_team_id', 0)
+            current_id += 1
 
-        # Mise à jour du cache avec le nouveau tableau et l'ID
-        cache.set('team_data', team_data, timeout=3600)
-        cache.set('current_team_id', current_id, timeout=3600)
+            # Ajouter le nouveau teamName et l'ID au tableau
+            team_data.append({'id': current_id, 'teamName': team_name, 'pokemon': []})
+
+            # Mise à jour du cache avec le nouveau tableau et l'ID
+            cache.set('team_data', team_data, timeout=3600)
+            cache.set('current_team_id', current_id, timeout=3600)
 
         return render(request, 'team.html', {'team_data': team_data})
     else:
