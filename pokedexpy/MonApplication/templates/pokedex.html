@@ -33,7 +33,7 @@
 		<div class="main-content">
 			<div class="sidebar">
 				<div class="pokemon-info">
-					<h2>{{ current_pokemon.name }}</h2>
+					<h2>{{ current_pokemon.name|title }}</h2>
 					<div class="pokemon-selected-image-container">
 						<img
 							class="pokemon-selected-background"
@@ -56,7 +56,24 @@
 							>Next</a
 						>
 					</div>
-					<p>STAT DU POKEMON SELECT</p>
+					<div>
+						{% comment %} <h2>{{ current_pokemon.name|title }}</h2> {% endcomment %}
+						<p>ID : #{{ current_pokemon.id }}</p>
+						<p>TYPES : 
+							{% for type in current_pokemon.types %}
+								<span>{{ type }}</span>
+							{% endfor %}
+						</p>
+						<details>
+							<summary>ATTACKS :</summary>
+							{% for move in current_pokemon.moves %}
+								{{ move }} | 
+							{% endfor %}
+						</details>
+						{% comment %} <p>attack :{{ pokemon.moves }}</p> {% endcomment %}
+						<p>TAILLE : {{ current_pokemon.height }}</p>
+						<p>HP :{{ current_pokemon.hp }}</p>
+					</div>
 				</div>
 			</div>
 			{% include 'collection.html' %}

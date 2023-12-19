@@ -1,22 +1,28 @@
+* {
+  box-sizing:border-box;
+}
+
 :root{
-    --plante:rgb(16, 87, 16);
-    --insecte:rgb(13, 145, 13);
-    --feu:rgb(210, 45, 45);
-    --eau:rgb(62, 62, 197);
-    --glace:rgb(102, 227, 227);
-    --electric:rgb(212, 212, 66);
-    --psy:rgb(179, 45, 179);
-    --spectre:rgb(62, 17, 83);
-    --combat:rgb(198, 65, 20);
-    --roche:rgb(130, 130, 130);
-    --sol:rgb(149, 87, 56);
-    --poison:rgb(51, 16, 62);
-    --dragon:rgb(146, 137, 91);
-    --normal:#fff;
-    --vol:#909090;
-    
-  }
+  --gradient-cards: linear-gradient(342deg, rgba(201,201,201,1) 17%, rgba(236,236,236,1) 100%);
+  --plante:rgb(16, 87, 16);
+  --insecte:rgb(13, 145, 13);
+  --feu:rgb(210, 45, 45);
+  --eau:rgb(62, 62, 197);
+  --glace:rgb(102, 227, 227);
+  --electric:rgb(212, 212, 66);
+  --psy:rgb(179, 45, 179);
+  --spectre:rgb(62, 17, 83);
+  --combat:rgb(198, 65, 20);
+  --roche:rgb(130, 130, 130);
+  --sol:rgb(149, 87, 56);
+  --poison:rgb(51, 16, 62);
+  --dragon:rgb(146, 137, 91);
+  --normal:#fff;
+  --vol:#909090;
+}
 
 body {
     font-family: "PokemonFont", Arial, sans-serif;
+    src: url("../fonts/pkmnFont.ttf");
+
 }
