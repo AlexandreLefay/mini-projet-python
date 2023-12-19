@@ -59,51 +59,7 @@
 					<p>STAT DU POKEMON SELECT</p>
 				</div>
 			</div>
-
-			<div class="collection">
-				<div class="collection-header">
-					<h3>Collection</h3>
-				</div>
-				<div class="collection-grid">
-					{% for pokemon in pokemon_data %}
-							<div class="pokemon-card" onclick="showPopup('{{ pokemon.id }}')">
-								<div class="collection-item">
-									<div class="card-header">
-										<div class="pokemon-id">#{{ pokemon.id }}</div>
-										<div class="pokemon-hp">{{ pokemon.hp }}pv</div>
-									</div>
-									<img
-										class="pokemon-sprite"
-										src="{{ pokemon.sprite_front }}"
-										alt="{{ pokemon.name }} sprite"
-									/>
-									<div class="card-footer">
-										{% for type in pokemon.types %}
-											<div class="pokemon-type">{{ type }}</div>
-										{% endfor %}
-
-									</div>
-								</div>
-							</div>
-							<div
-								id="popup-{{ pokemon.id }}"
-								class="popup"
-								onclick="hidePopup('{{ pokemon.id }}')"
-							>
-								<h2>NOM : {{ pokemon.name }}</h2>
-								<p>TYPES : {{ pokemon.types }}</p>
-								<p>ID : #{{ pokemon.id }}</p>
-								<p>attack :{{ pokemon.moves }}</p>
-								<p>TAILLE : {{ pokemon.height }}</p>
-								<p>HP :{{ pokemon.hp }}</p>
-								<img
-									src="{{ pokemon.sprite_front}}"
-									alt="{{ pokemon.name }} sprite"
-								/>
-							</div>
-					{% endfor %}
-				</div>
-			</div>
+			{% include 'collection.html' %}
 		</div>
 	</body>
 </html>
