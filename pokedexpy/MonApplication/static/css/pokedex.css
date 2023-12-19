@@ -1,3 +1,4 @@
+@import "global_css.css";
 .links-container {
     display: flex;
     justify-content: center;
