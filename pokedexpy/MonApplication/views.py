@@ -1,12 +1,9 @@
-import json
-
 from MonApplication.function.cache_data import get_cached_pokemon_data
 from MonApplication.function.cache_data import get_cached_team_data
 from MonApplication.function.manage_team import get_pokemon_data_team
 from MonApplication.request.get_pokemon import fetch_pokemon_data
 from MonApplication.request.get_pokemon import filter_pokemon_by_query
 from MonApplication.request.get_pokemon import get_pokemon_by_id
-from MonApplication.request.get_pokemon import get_pokemon_by_ids
 from MonApplication.request.get_pokemon import get_pokemon_id_from_request
 from asgiref.sync import sync_to_async
 from django.core.cache import cache
@@ -16,6 +13,7 @@ from django.shortcuts import render
 # Vue principale qui affiche la page d'accueil
 def home(request):
     return render(request, 'home.html')
+
 
 # Vue asynchrone pour afficher les données du Pokédex
 async def pokedex(request):
@@ -29,7 +27,7 @@ async def pokedex(request):
 
 # Vue pour afficher nos équipes Pokémon
 async def team(request):
-    team_data = await get_cached_team_data() #[{'id': 1, 'teamName': 'test', 'pokemon': [1, 2, 3]}, {'id': 2, 'teamName': 'test2', 'pokemon': [1, 2, 3]}]
+    team_data = await get_cached_team_data()  # [{'id': 1, 'teamName': 'test', 'pokemon': [1, 2, 3]}, {'id': 2, 'teamName': 'test2', 'pokemon': [1, 2, 3]}]
 
     if request.method == 'GET':
         team_id = int(request.GET.get('team_id', 0))
@@ -62,31 +60,38 @@ async def team(request):
     else:
         return render(request, 'team.html', {'team_data': team_data})
 
+
 # Vue pour afficher les détails d'une équipe
 async def detail_team(request, team_id):
-    teams = cache.get(
-        'team_data')  # Récupérer les données de toutes les équipes en cache [{'id': 1, 'teamName': 'test', 'pokemon': [1, 2, 3]}, {'id': 2, 'teamName': 'test2', 'pokemon': [1, 2, 3]}]
-    current_team = next((item for item in teams if item['id'] == team_id),
-                        None)  # Les données de l'équipe actuelle {'id': 1, 'teamName': 'test', 'pokemon': [1, 2, 3]}
-    team_pokemon_id = current_team['pokemon']  # Les IDs des Pokémon de l'équipe actuelle [1, 2, 3]
+    teams = cache.get('team_data')  # Données de toutes les équipes en cache
+    current_team = next((item for item in teams if item['id'] == team_id), None)
+    team_pokemon_id = current_team['pokemon']  # IDs des Pokémon de l'équipe actuelle
 
-    pokemon_data = await get_cached_pokemon_data()  # Récupérer les données de tous les Pokémon en cache
-    pokemon_data_team = get_pokemon_data_team(team_id)  # Récupérer les données des Pokémon de l'équipe actuelle
+    pokemon_data = await get_cached_pokemon_data()  # Données de tous les Pokémon en cache
 
     if request.method == 'POST':
-        data = json.loads(request.body)
-        pokemonId = data.get('pokemonId')  # Récupérer l'ID du Pokémon à ajouter à l'équipe
+        # Logique pour la suppression d'un Pokémon
+        pokemon_id = int(request.POST.get('pokemon_id', 0))
+        if pokemon_id in team_pokemon_id:
+            team_pokemon_id.remove(pokemon_id)  # Supprimer l'ID du Pokémon si présent
+            print(f"Pokemon {pokemon_id} supprimé")
 
-        team_pokemon_id.append(pokemonId)  # Ajouter l'ID du Pokémon à la liste des IDs des Pokémon de l'équipe actuelle
-        current_team['pokemon'] = team_pokemon_id  # Mise à jour de current_team
-        cache.set('team_data', teams)  # Mise à jour du cache avec les nouvelles données
+    if request.method == 'GET':
+        # Logique pour ajouter un Pokémon si l'équipe a moins de 6 Pokémon
+        if len(team_pokemon_id) < 6:
+            pokemon_id = int(request.GET.get('pokemon_id', 0))
+            if pokemon_id not in team_pokemon_id:
+                team_pokemon_id.append(pokemon_id)  # Ajouter l'ID du Pokémon
+                print(f"Pokemon {pokemon_id} ajouté")
+        else:
+            print("L'équipe a déjà 6 Pokémon")
 
-        pokemon_data_team = get_pokemon_by_ids(pokemon_data, team_pokemon_id)
-        return render(request, 'detail_team.html',
-                      {'team': current_team, 'pokemon_data': pokemon_data, 'pokemon_data_team': pokemon_data_team})
-    else:
-        return render(request, 'detail_team.html',
-                      {'team': current_team, 'pokemon_data': pokemon_data, 'pokemon_data_team': pokemon_data_team})
+    current_team['pokemon'] = team_pokemon_id  # Mise à jour de current_team
+    cache.set('team_data', teams)  # Mise à jour du cache
+
+    pokemon_data_team = get_pokemon_data_team(team_id)  # Données des Pokémon de l'équipe actuelle
+    return render(request, 'detail_team.html',
+                  {'team': current_team, 'pokemon_data': pokemon_data, 'pokemon_data_team': pokemon_data_team})
 
 
 # Vue pour debug mes données en cache, accessible via l'URL /cache_data

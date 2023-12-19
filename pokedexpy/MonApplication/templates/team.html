@@ -23,7 +23,7 @@
                 <a href="{% url 'detail_team' team.id %}"
                 >{{ team.teamName }}#{{ team.id }}</a
                 >
-                <a href="{% url 'team' %}?team_id={{ team.id }}">DELETE</a>
+                <a href="{{ request.path }}?team_id={{ team.id }}">DELETE</a>
             </li>
         {% endfor %}
     </ul>
