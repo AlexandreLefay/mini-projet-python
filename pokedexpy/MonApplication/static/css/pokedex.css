@@ -105,15 +105,14 @@ body {
   
   .collection-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     gap: 10px;
     padding: 10px;
     background-color: #f0f8ff;
   }
   
   .collection-item {
-    background-color: #fff;
-    border: 1px solid #ccc;
+    border-radius: 15px;
     padding: 10px;
     text-align: center;
   }
@@ -139,6 +138,9 @@ body {
     margin: 0 auto;
     max-width: 1200px;
   }
+  .pokemon-sprite {
+    margin-right: 12px;
+  }
   .popup {
     display: none;
     position: fixed;
@@ -151,7 +153,16 @@ body {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   }
   .pokemon-card {
+    border: 4px solid #454343;
+    border-radius: 10px;
+    background-color: #fff;
     cursor: pointer;
+  }
+  .card-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
   }
   
 
