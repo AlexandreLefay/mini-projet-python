@@ -1,37 +1,38 @@
 <!-- FILEPATH: /Users/alex/Documents/epsi/module python/tp/mini-projet/pokedexpy/MonApplication/templates/team.html -->
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Vos équipes</title>
-	</head>
-	<body>
-		<h1>Vos équipes</h1>
-		<button onclick="window.location.href='http://localhost:8000'">
-			Go to home
-		</button>
-		<button onclick="window.location.href='http://localhost:8000/pokedex/'">
-			Go to pokedex
-		</button>
-		<button onclick="window.location.href='http://localhost:8000/cache_data/'">
-			Les données en cache
-		</button>
+<head>
+    <title>Vos équipes</title>
+</head>
+<body>
+<h1>Vos équipes</h1>
+<button onclick="window.location.href='http://localhost:8000'">
+    Go to home
+</button>
+<button onclick="window.location.href='http://localhost:8000/pokedex/'">
+    Go to pokedex
+</button>
+<button onclick="window.location.href='http://localhost:8000/cache_data/'">
+    Les données en cache
+</button>
 
-		{% if team_data %}
-		<ul>
-			<ul>
-				{% for team in team_data %}
-				<li>
-					<a href="{% url 'detail_team' team.id %}"
-						>{{ team.teamName }}#{{ team.id }}</a
-					>
-					<a href="{% url 'team' %}?team_id={{ team.id }}">DELETE</a>
-				</li>
-				{% endfor %}
-			</ul>
-			{% endif %}
-		</ul>
-		<div style="background-color: gray; padding: 10px">
-			<a href="http://localhost:8000/create_team">Créer une équipe</a>
-		</div>
-	</body>
+{% if team_data %}
+    <ul>
+    <ul>
+        {% for team in team_data %}
+            <li>
+                <a href="{% url 'detail_team' team.id %}"
+                >{{ team.teamName }}#{{ team.id }}</a
+                >
+                <a href="{% url 'team' %}?team_id={{ team.id }}">DELETE</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
+</ul>
+<div style="background-color: gray; padding: 10px">
+    <a href="#" id="createTeamLink">Créer une équipe</a>
+    <input type="text" id="teamNameInput" style="display: none;" placeholder="Entrez le nom de l'équipe">
+</div>
+</body>
 </html>
