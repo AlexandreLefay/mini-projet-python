@@ -29,6 +29,7 @@ async def pokedex(request):
 
 # Vue pour afficher nos équipes Pokémon
 async def team(request):
+    pokemon_data = await get_cached_pokemon_data()  # Données de tous les Pokémon en cache
     team_data = await get_cached_team_data()  # [{'id': 1, 'teamName': 'test', 'pokemon': [1, 2, 3]}, {'id': 2, 'teamName': 'test2', 'pokemon': [1, 2, 3]}]
 
     if request.method == 'GET':
@@ -39,7 +40,6 @@ async def team(request):
 
         cache.set('team_data', filtered_teams, timeout=3600)
         team_data = await get_cached_team_data()
-        return render(request, 'team.html', {'team_data': team_data})
 
     if request.method == 'POST':
         team_name = request.POST.get('teamName')
@@ -69,10 +69,7 @@ async def team(request):
             # Mise à jour du cache avec le nouveau tableau et l'ID
             cache.set('team_data', team_data, timeout=3600)
             cache.set('current_team_id', current_id, timeout=3600)
-
-        return render(request, 'team.html', {'team_data': team_data})
-    else:
-        return render(request, 'team.html', {'team_data': team_data})
+    return render(request, 'team.html', {'team_data': team_data, 'pokemon_data': pokemon_data})
 
 
 # Vue pour afficher les détails d'une équipe
