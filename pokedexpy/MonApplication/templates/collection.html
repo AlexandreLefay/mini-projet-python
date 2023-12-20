@@ -4,53 +4,57 @@
     </div>
     <div class="collection-grid">
         {% for pokemon in pokemon_data %}
-                <div class="pokemon-card" onclick="showPopup('{{ pokemon.id }}')">
-                    <div class="collection-item">
-                        <div class="card-header">
-                            <div class="pokemon-id">#{{ pokemon.id }}</div>
-                            <div class="pokemon-hp">{{ pokemon.hp }}pv</div>
-                        </div>
-                        <img
-                            class="pokemon-sprite"
-                            src="{{ pokemon.sprite_front }}"
-                            alt="{{ pokemon.name }} sprite"
-                        />
-                        <div class="card-footer">
-                            {% for type in pokemon.types %}
-                                <div class="pokemon-type">{{ type }}</div>
-                            {% endfor %}
-
-                        </div>
-                    </div>
+        <div class="pokemon-card {{ pokemon.types.0 }}" onclick="showPopup('{{ pokemon.id }}')">
+            <div class="card-left">
+                <div class="pokemon-id">N°{{ pokemon.id }}</div>
+                <div class="pokemon-name">{{ pokemon.name|title }}</div>
+                <div class="pokemon-types">
+                    {% for type in pokemon.types %}
+                        <div class="pokemon-type">{{ type }}</div>
+                    {% endfor %}
                 </div>
-                <div
-                    id="popup-{{ pokemon.id }}"
-                    class="popup"
-                >
-                <span class="close-btn" onclick="hidePopup('{{ pokemon.id }}')">&times;</span>
-
-                    <h2>{{ pokemon.name|title }}</h2>
-                    <p>ID : #{{ pokemon.id }}</p>
-                    <p>TYPES : 
-                        {% for type in pokemon.types %}
-                            <span>{{ type }}</span>
-                        {% endfor %}
-                    </p>
-                    <details>
-                        <summary>ATTACKS :</summary>
-                        {% for move in pokemon.moves %}
-                            {{ move }} | 
-                        {% endfor %}
-                    </details>
-                    {% comment %} <p>attack :{{ pokemon.moves }}</p> {% endcomment %}
-                    <p>TAILLE : {{ pokemon.height }}</p>
-                    <p>HP :{{ pokemon.hp }}</p>
-                    <img
-                        src="{{ pokemon.sprite_front}}"
+            </div>
+            <div class="card-right">
+                <img
+                        class="pokemon-sprite"
+                        src="{{ pokemon.sprite_front }}"
                         alt="{{ pokemon.name }} sprite"
-                        class="pokemon-popup"
-                    />
-                </div>
+                />
+            </div>
+        </div>
+        <div
+                id="popup-{{ pokemon.id }}"
+                class="popup"
+        >
+            <span class="close-btn" onclick="hidePopup('{{ pokemon.id }}')">&times;</span>
+
+            <h2>{{ pokemon.name|title }}</h2>
+            <p>ID : #{{ pokemon.id }}</p>
+            {% comment %} <p>TYPES :
+            {% for type in pokemon.types %}
+            <span>{{ type }}</span>
+            {% endfor %}
+        </p> {% endcomment %}
+            <p>ATTACKS :</p>
+            <p>{{ pokemon.moves.1|title }}</p>
+            <p>{{ pokemon.moves.5|title }}</p>
+            {% comment %} <details>
+                <summary>ATTACKS :</summary>
+                {% for move in pokemon.moves %}
+                    {{ move.0 }} 
+                {% endfor %}
+            </details> {% endcomment %}
+            {% comment %} <p>attack :{{ pokemon.moves }}</p> {% endcomment %}
+            <p>TAILLE : {{ pokemon.height }}</p>
+            <p>HP :{{ pokemon.hp }}</p>
+            <img
+                    src="{{ pokemon.sprite_front}}"
+                    alt="{{ pokemon.name }} sprite"
+                    class="pokemon-popup"
+            />
+        </div>
         {% endfor %}
+
+
     </div>
 </div>
