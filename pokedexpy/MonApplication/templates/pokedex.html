@@ -11,25 +11,22 @@
 	</head>
 	<script src="{% static 'js/pokedex.js' %}"></script>
 	<body>
-		<button onclick="window.location.href='http://localhost:8000'">
-			Go to home
-		</button>
-		<button onclick="window.location.href='http://localhost:8000/team/'">
-			Go to Team
-		</button>
-		<button onclick="window.location.href='http://localhost:8000/cache_data/'">
-			Les données en cache
-		</button>
-
-		<div class="header">
-			<h1>POKEDEX</h1>
+		<div class="navbar">
+			<img class="logo" src="{% static 'img/pokeball-pokemon-svgrepo-com.svg' %}" alt="pokeball logo" />
+			<ul class="nav-links">
+				<li><a href="http://localhost:8000">Home</a></li>
+				<li><a href="http://localhost:8000/team/">Team</a></li>
+				<li><a href="http://localhost:8000/pokedex/">Pokedex</a></li>
+				<li><a href="http://localhost:8000/cache_data/">Cache</a></li>
+			</ul>
+			<div class="search-container">
+				<form method="get" action="{% url 'pokedex' %}">
+					<input type="text" name="search" placeholder="Search pokemon..." />
+					<button type="submit">Search</button>
+					<button href="{% url 'pokedex' %}" class="reset-button">Reset</button>
+				</form>
+			</div>
 		</div>
-		<form method="get" action="{% url 'pokedex' %}">
-			<input type="text" name="search" placeholder="Rechercher un Pokémon..." />
-			<button type="submit">Rechercher</button>
-			<a href="{% url 'pokedex' %}" class="reset-button">Réinitialiser</a>
-		</form>
-
 		<div class="main-content">
 			<div class="sidebar">
 				<div class="pokemon-info">
@@ -57,20 +54,16 @@
 						>
 					</div>
 					<div>
-						{% comment %} <h2>{{ current_pokemon.name|title }}</h2> {% endcomment %}
 						<p>ID : #{{ current_pokemon.id }}</p>
 						<p>TYPES : 
 							{% for type in current_pokemon.types %}
 								<span>{{ type }}</span>
 							{% endfor %}
 						</p>
-						<details>
-							<summary>ATTACKS :</summary>
-							{% for move in current_pokemon.moves %}
-								{{ move }} | 
-							{% endfor %}
-						</details>
-						{% comment %} <p>attack :{{ pokemon.moves }}</p> {% endcomment %}
+						<p>ATTACKS :
+							<span>{{ current_pokemon.moves.5 }}</span >
+							<span>{{ current_pokemon.moves.2 }}</span>
+						</p>
 						<p>TAILLE : {{ current_pokemon.height }}</p>
 						<p>HP :{{ current_pokemon.hp }}</p>
 					</div>
