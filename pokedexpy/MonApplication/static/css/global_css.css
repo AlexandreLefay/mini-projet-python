@@ -26,7 +26,7 @@ body {
     src: url("../fonts/pkmnFont.ttf");
 
 }
-.links-container {
+.first-level-container{
     display: flex;
     justify-content: center;
 }
@@ -35,3 +35,4 @@ body {
     align-items: center;
     margin: 2em;
 }
+

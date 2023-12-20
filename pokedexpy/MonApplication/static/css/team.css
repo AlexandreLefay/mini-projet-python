@@ -48,6 +48,7 @@ body {
   padding: 20px;
   background-color: #fff;
 }
+
 /* Largeur complète pour les champs de saisie */
 .form-container input[type="text"],
 .form-container input[type="password"] {
@@ -98,3 +99,12 @@ body {
 .card_team>.label-btn{
   font-size: 2em;
 }
+.ul-card{
+  list-style-type: none;
+}
+.mini-pokemon{
+  width: 50px;
+}
+
+
+
