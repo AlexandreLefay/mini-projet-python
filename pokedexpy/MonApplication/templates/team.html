@@ -8,8 +8,14 @@
 			type="text/css"
 			href="{% static 'css/team.css' %}"
 		/>
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="{% static 'css/navbar.css' %}"
+    />
     </head>
     <body>
+        {% include 'navbar.html' %}
         <h1>Vos équipes</h1>
         <div class="first-level-container">
             <div class="box-container">

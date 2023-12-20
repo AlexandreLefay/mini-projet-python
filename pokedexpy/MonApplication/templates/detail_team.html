@@ -8,13 +8,20 @@
             href="{% static 'css/pokedex.css' %}"
     />
     <link
+        rel="stylesheet"
+        type="text/css"
+        href="{% static 'css/navbar.css' %}"
+/>
+    <link
 			rel="stylesheet"
 			type="text/css"
 			href="{% static 'css/team.css' %}"
 		/>
     <title>Vos équipes</title>
 </head>
-<body>  <h1>Vos équipes</h1>
+<body>
+    {% include 'navbar.html' %}
+    <h1>Vos équipes</h1>
         <div class="links-container">
             <div class="box-container">
                 <button onclick="window.location.href='http://localhost:8000'" class="open-button">
@@ -56,42 +63,29 @@
                 </div>
             </div>
         {% endfor %}
-
-        <div class="collection">
-            <div class="collection-header">
-                <h3>Collection</h3>
-            </div>
-            <div class="collection-grid">
-                {% for pokemon in pokemon_data %}
-                    <a href="{{ request.path }}?pokemon_id={{ pokemon.id }}">
-                        <div class="pokemon-card">
-                            <div class="collection-item">
-                                <div>#{{ pokemon.id }}</div>
-                                <img
-                                        src="{{ pokemon.sprite_front }}"
-                                        alt="{{ pokemon.name }} sprite"
-                                />
-                            </div>
+        <div class="collection-grid">
+            {% for pokemon in pokemon_data %}
+            <a href="{{ request.path }}?pokemon_id={{ pokemon.id }}">
+                <div class="pokemon-card {{ pokemon.types.0 }}">
+                    <div class="card-left">
+                        <div class="pokemon-id">N°{{ pokemon.id }}</div>
+                        <div class="pokemon-name">{{ pokemon.name|title }}</div>
+                        <div class="pokemon-types">
+                            {% for type in pokemon.types %}
+                                <div class="pokemon-type">{{ type }}</div>
+                            {% endfor %}
                         </div>
-                    </a>
-                    <div
-                            id="popup-{{ pokemon.id }}"
-                            class="popup"
-                            onclick="hidePopup('{{ pokemon.id }}')"
-                    >
-                        <h2>NOM : {{ pokemon.name }}</h2>
-                        <p>TYPES : {{ pokemon.types }}</p>
-                        <p>ID : #{{ pokemon.id }}</p>
-                        <p>attack :{{ pokemon.moves }}</p>
-                        <p>TAILLE : {{ pokemon.height }}</p>
-                        <p>HP :{{ pokemon.hp }}</p>
+                    </div>
+                    <div class="card-right">
                         <img
+                                class="pokemon-sprite"
                                 src="{{ pokemon.sprite_front }}"
                                 alt="{{ pokemon.name }} sprite"
                         />
                     </div>
-                {% endfor %}
-            </div>
+                </div>
+            </a>
+            {% endfor %}
         </div>
     </body>
 </html>
