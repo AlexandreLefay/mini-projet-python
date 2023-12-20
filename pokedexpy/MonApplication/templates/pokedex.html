@@ -11,7 +11,7 @@
 	</head>
 	<script src="{% static 'js/pokedex.js' %}"></script>
 	<body>
-		<div class="navbar">
+		{% comment %} <div class="navbar">
 			<img class="logo" src="{% static 'img/pokeball-pokemon-svgrepo-com.svg' %}" alt="pokeball logo" />
 			<ul class="nav-links">
 				<li><a href="http://localhost:8000">Home</a></li>
@@ -26,7 +26,10 @@
 					<button href="{% url 'pokedex' %}" class="reset-button">Reset</button>
 				</form>
 			</div>
-		</div>
+		</div> {% endcomment %}
+		{% include 'navbar.html' %}
+
+
 		<div class="main-content">
 			<div class="sidebar">
 				<div class="pokemon-info">
