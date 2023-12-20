@@ -41,7 +41,7 @@ async def team(request):
             team_data.append({
                 'id': current_id,
                 'teamName': team_name,
-                'pokemon': [1],  # Ajout d'un Pokémon par défaut
+                'pokemon': [],  # Ajout d'un Pokémon par défaut
                 'background': f"background_{background_number}.svg"
             })
             cache.set('team_data', team_data, timeout=CACHE_TIMEOUT)
