@@ -12,7 +12,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
     width: 480px;
     height: 102px;
     flex-shrink: 0;
@@ -27,17 +26,7 @@
     margin: 0 auto;
     max-width: 1200px;
 }
-.popup {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-}
+
 .pokemon-card {
     cursor: pointer;
 }
@@ -65,6 +54,8 @@ body {
   /* POKEMON SELECTED INFORMATION */
   .pokemon-info {
     background-color: #f0f8ff;
+    border-radius: 10px;
+    text-align: center;
     padding: 10px;
     margin-bottom: 20px;
   }
@@ -80,7 +71,7 @@ body {
 
   .pokemon-info .pokemon-selected-image-container .pokemon-selected-image {
     position: absolute;
-    transform: translate(0%, 22%);
+    /* transform: translate(0%, 22%); */
   }
   
   .button {
@@ -105,15 +96,14 @@ body {
   
   .collection-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
     gap: 10px;
     padding: 10px;
     background-color: #f0f8ff;
   }
   
   .collection-item {
-    background-color: #fff;
-    border: 1px solid #ccc;
+    border-radius: 15px;
     padding: 10px;
     text-align: center;
   }
@@ -139,19 +129,51 @@ body {
     margin: 0 auto;
     max-width: 1200px;
   }
+  .pokemon-sprite {
+    margin-top: 1vh;
+  }
+  .pokemon-popup {
+    position:fixed;
+    right:10px;
+    bottom: 10px 
+
+  }
   .popup {
     display: none;
     position: fixed;
     top: 50%;
     left: 50%;
+    width: 35vh;
     transform: translate(-50%, -50%);
-    background-color: white;
+    border: 4px solid #454343;
+    border-style: outset;
+    background: rgb(201,201,201);
+    background: linear-gradient(342deg, rgba(201,201,201,1) 17%, rgba(236,236,236,1) 100%);
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    z-index: 999;
   }
-  .pokemon-card {
+  .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
     cursor: pointer;
+}
+  .pokemon-card {
+    border: 4px solid #454343;
+    border-radius: 10px;
+    border-style: outset;
+    background: rgb(201,201,201);
+    background: linear-gradient(342deg, rgba(201,201,201,1) 17%, rgba(236,236,236,1) 100%);
+    cursor: pointer;
+  }
+  .card-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
   }
   
 
