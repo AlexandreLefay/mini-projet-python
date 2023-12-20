@@ -1,75 +1,66 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Pokedex</title>
-		<link
-			rel="stylesheet"
-			type="text/css"
-			href="{% static 'css/pokedex.css' %}"
-		/>
-	</head>
-	<script src="{% static 'js/pokedex.js' %}"></script>
-	<body>
-		<div class="navbar">
-			<img class="logo" src="{% static 'img/pokeball-pokemon-svgrepo-com.svg' %}" alt="pokeball logo" />
-			<ul class="nav-links">
-				<li><a href="http://localhost:8000">Home</a></li>
-				<li><a href="http://localhost:8000/team/">Team</a></li>
-				<li><a href="http://localhost:8000/pokedex/">Pokedex</a></li>
-				<li><a href="http://localhost:8000/cache_data/">Cache</a></li>
-			</ul>
-			<div class="search-container">
-				<form method="get" action="{% url 'pokedex' %}">
-					<input type="text" name="search" placeholder="Search pokemon..." />
-					<button type="submit">Search</button>
-					<button href="{% url 'pokedex' %}" class="reset-button">Reset</button>
-				</form>
-			</div>
-		</div>
-		<div class="main-content">
-			<div class="sidebar">
-				<div class="pokemon-info">
-					<h2>{{ current_pokemon.name|title }}</h2>
-					<div class="pokemon-selected-image-container">
-						<img
-							class="pokemon-selected-background"
-							src="{% static 'img/pokemon_background.svg' %}"
-							alt="pokemon background"
-						/>
-						<img
-							class="pokemon-selected-image"
-							src="{{ current_pokemon.sprite_front }}"
-							alt="{{ current_pokemon.name }}"
-						/>
-					</div>
-					<div class="navigation">
-						<a
-							href="{% url 'pokedex' %}?pokemon_id={{ current_pokemon.id|add:'-1' }}"
-							>Previous</a
-						>
-						<a
-							href="{% url 'pokedex' %}?pokemon_id={{ current_pokemon.id|add:'1' }}"
-							>Next</a
-						>
-					</div>
-					<div>
-						<p>ID : #{{ current_pokemon.id }}</p>
-						<p>TYPES : 
-							{% for type in current_pokemon.types %}
-								<span>{{ type }}</span>
-							{% endfor %}
-						</p>
-						<p>ATTACKS :
-							<span>{{ current_pokemon.moves.5 }}</span >
-							<span>{{ current_pokemon.moves.2 }}</span>
-						</p>
-						<p>TAILLE : {{ current_pokemon.height }}</p>
-						<p>HP :{{ current_pokemon.hp }}</p>
-					</div>
-				</div>
-			</div>
-			{% include 'collection.html' %}
-		</div>
-	</body>
+<head>
+    <title>Pokedex</title>
+    <link
+            rel="stylesheet"
+            type="text/css"
+            href="{% static 'css/pokedex.css' %}"
+    />
+</head>
+<script src="{% static 'js/pokedex.js' %}"></script>
+<body>
+
+
+<div class="navbar">
+    <img class="logo" src="{% static 'img/pokeball-pokemon-svgrepo-com.svg' %}" alt="pokeball logo"/>
+    <ul class="nav-links">
+        <li><a href="http://localhost:8000">Home</a></li>
+        <li><a href="http://localhost:8000/team/">Team</a></li>
+        <li><a href="http://localhost:8000/pokedex/">Pokedex</a></li>
+        <li><a href="http://localhost:8000/cache_data/">Cache</a></li>
+    </ul>
+    <div class="search-container">
+        <form method="get" action="{% url 'pokedex' %}">
+            <input type="text" name="search" placeholder="Search pokemon..."/>
+            <button type="submit">Search</button>
+            <button href="{% url 'pokedex' %}" class="reset-button">Reset</button>
+        </form>
+    </div>
+</div>
+
+
+<div class="sidebar">
+    <div class="sidebar-content">
+        {% with "img/types/"|add:current_pokemon.types.0|add:".svg" as img_path %}
+            <img src="{% static img_path %}" alt="{{ current_pokemon.name }}" class="pokemon-type-modal">
+        {% endwith %}
+        <img src="{{ current_pokemon.sprite_front }}" alt="{{ current_pokemon.name }}" class="pokemon-image">
+        <h2 class="pokemon-detail">{{ current_pokemon.name|title }} #{{ current_pokemon.id }}</h2>
+        <p>{{ current_pokemon_description }}</p>
+        <div class="pokemon-detail-ability">
+            <div class="pokemon-detail">Poids: {{ current_pokemon.weight }} Kg</div>
+            <div class="pokemon-detail">Taille: {{ current_pokemon.height }} Cm</div>
+            <div class="pokemon-detail">HP : {{ current_pokemon.hp }}</div>
+            <div class="pokemon-detail">
+                Abilité: {{ current_pokemon.moves.5|title }}, {{ current_pokemon.moves.2|title }}</div>
+            {% for type in current_pokemon.types %}
+                <div class="pokemon-type">{{ type }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="navigation">
+            <a href="{% url 'pokedex' %}?pokemon_id={{ current_pokemon.id|add:'-1' }}">&#8592;</a>
+            <!-- Flèche gauche -->
+            <a href="{% url 'pokedex' %}?pokemon_id={{ current_pokemon.id|add:'1' }}">&#8594;</a> <!-- Flèche droite -->
+        </div>
+    </div>
+</div>
+
+
+<div class="main-content">
+    {% include 'collection.html' %}
+</div>
+</body>
 </html>
