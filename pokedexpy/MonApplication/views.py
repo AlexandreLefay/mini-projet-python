@@ -1,119 +1,109 @@
-from random import random, uniform
+from random import uniform
 
 from MonApplication.function.cache_data import get_cached_pokemon_data
 from MonApplication.function.cache_data import get_cached_team_data
-from MonApplication.function.manage_team import get_pokemon_data_team
-from MonApplication.request.get_pokemon import fetch_pokemon_data
-from MonApplication.request.get_pokemon import filter_pokemon_by_query
-from MonApplication.request.get_pokemon import get_pokemon_by_id
-from MonApplication.request.get_pokemon import get_pokemon_id_from_request
-from asgiref.sync import sync_to_async
+from MonApplication.function.filter import filter_pokemon_by_ids
+from MonApplication.function.filter import filter_pokemon_by_query
 from django.core.cache import cache
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+
+# Constantes
+POKEMON_API_URL = "https://pokeapi.co/api/v2/pokemon/"
+POKEMON_COUNT = 151  # Nombre total de Pokémon à récupérer (première génération)
+CACHE_TIMEOUT = 3600  # Durée de vie du cache en secondes
 
 
-# Vue principale qui affiche la page d'accueil
+# Vue pour la page d'accueil
 def home(request):
     return render(request, 'home.html')
 
 
-# Vue asynchrone pour afficher les données du Pokédex
+# Vue asynchrone pour afficher les données du Pokédex.
 async def pokedex(request):
     pokemon_data = await get_cached_pokemon_data()
-    pokemon_id = get_pokemon_id_from_request(request)
-    current_pokemon = get_pokemon_by_id(pokemon_data, pokemon_id)
+    pokemon_id = request.GET.get('pokemon_id', 1)
+    current_pokemon = next((pokemon for pokemon in pokemon_data if pokemon['id'] == int(pokemon_id)), pokemon_data[0])
     pokemon_data = filter_pokemon_by_query(pokemon_data, request)
-
     return render(request, 'pokedex.html', {'current_pokemon': current_pokemon, 'pokemon_data': pokemon_data})
 
 
 # Vue pour afficher nos équipes Pokémon
 async def team(request):
-    pokemon_data = await get_cached_pokemon_data()  # Données de tous les Pokémon en cache
-    team_data = await get_cached_team_data()  # [{'id': 1, 'teamName': 'test', 'pokemon': [1, 2, 3]}, {'id': 2, 'teamName': 'test2', 'pokemon': [1, 2, 3]}]
+    team_data = await get_cached_team_data()
+    pokemon_data = await get_cached_pokemon_data()
 
-    if request.method == 'GET':
-        team_id = int(request.GET.get('team_id', 0))
-
-        # Filtrer pour garder les équipes dont l'ID est différent de team_id
-        filtered_teams = [team for team in team_data if team['id'] != team_id]
-
-        cache.set('team_data', filtered_teams, timeout=3600)
-        team_data = await get_cached_team_data()
-
+    # Gestion de la soumission du formulaire pour créer une nouvelle équipe
     if request.method == 'POST':
         team_name = request.POST.get('teamName')
-        # Récupérer le tableau actuel du cache ou initialiser un nouveau tableau si aucun n'existe
-        team_data = cache.get('team_data', [])
+        if team_name and not any(team['teamName'] == team_name for team in team_data):
+            current_id = cache.get('current_team_id', 0) + 1
+            background_number = round(uniform(1, 8))
+            team_data.append({
+                'id': current_id,
+                'teamName': team_name,
+                'pokemon': [1],  # Ajout d'un Pokémon par défaut
+                'background': f"background_{background_number}.svg"
+            })
+            cache.set('team_data', team_data, timeout=CACHE_TIMEOUT)
+            cache.set('current_team_id', current_id, timeout=CACHE_TIMEOUT)
 
-        # Teste l'unicité du nom et le fait qu'il soit renseigné pour éviter les doublons et les bug de refresh
-        teamNameNotExist = True
-        for team in team_data:
-            if team['teamName'] == team_name:
-                teamNameNotExist = False
-        if team_name and teamNameNotExist:
+    # Gestion de la suppression d'une équipe
+    elif request.method == 'GET' and 'team_id' in request.GET:
+        delete_team_id = int(request.GET['team_id'])
+        team_data = [team for team in team_data if team['id'] != delete_team_id]
+        cache.set('team_data', team_data, timeout=CACHE_TIMEOUT)
 
-            # Récupérer l'ID actuel ou initialiser à 1 si aucun n'existe
-            current_id = cache.get('current_team_id', 0)
-            current_id += 1
-
-            # Choisit un background au hasard
-            background = round(uniform(1, 8))
-
-            # Ajouter le nouveau teamName et l'ID au tableau
-            team_data.append({'id': current_id,
-                              'teamName': team_name,
-                              'pokemon': [],
-                              'background': "background_"+str(background)+".svg"})
-
-            # Mise à jour du cache avec le nouveau tableau et l'ID
-            cache.set('team_data', team_data, timeout=3600)
-            cache.set('current_team_id', current_id, timeout=3600)
     return render(request, 'team.html', {'team_data': team_data, 'pokemon_data': pokemon_data})
 
 
 # Vue pour afficher les détails d'une équipe
-async def detail_team(request, team_id):
-    teams = cache.get('team_data')  # Données de toutes les équipes en cache
-    current_team = next((item for item in teams if item['id'] == team_id), None)
-    team_pokemon_id = current_team['pokemon']  # IDs des Pokémon de l'équipe actuelle
+def handle_post_request(request, current_team):
+    pokemon_id = request.POST.get('pokemon_id')
+    if not (pokemon_id and pokemon_id.isdigit()):
+        return
 
-    pokemon_data = await get_cached_pokemon_data()  # Données de tous les Pokémon en cache
+    pokemon_id = int(pokemon_id)
+    if pokemon_id in current_team['pokemon']:
+        current_team['pokemon'].remove(pokemon_id)
+    elif len(current_team['pokemon']) < 6:
+        current_team['pokemon'].append(pokemon_id)
+
+
+def handle_get_request(request, current_team, pokemon_data):
+    pokemon_id = request.GET.get('pokemon_id')
+    if not (pokemon_id and pokemon_id.isdigit()):
+        return
+
+    pokemon_id = int(pokemon_id)
+    if pokemon_id not in current_team['pokemon'] and len(current_team['pokemon']) < 6:
+        if any(pokemon['id'] == pokemon_id for pokemon in pokemon_data):
+            current_team['pokemon'].append(pokemon_id)
+    elif pokemon_id in current_team['pokemon']:
+        current_team['pokemon'].remove(pokemon_id)
+
+
+# Vue pour afficher les détails d'une équipe
+async def detail_team(request, team_id):
+    teams = cache.get('team_data')
+    current_team = next((team for team in teams if team['id'] == team_id), None)
+    if not current_team:
+        return redirect('home')  # Rediriger si l'équipe n'existe pas
+
+    pokemon_data = await get_cached_pokemon_data()
 
     if request.method == 'POST':
-        # Logique pour la suppression d'un Pokémon
-        pokemon_id = int(request.POST.get('pokemon_id', 0))
-        if pokemon_id in team_pokemon_id:
-            team_pokemon_id.remove(pokemon_id)  # Supprimer l'ID du Pokémon si présent
-            print(f"Pokemon {pokemon_id} supprimé")
+        handle_post_request(request, current_team)
+    elif request.method == 'GET':
+        handle_get_request(request, current_team, pokemon_data)
 
-    if request.method == 'GET':
-        # Logique pour ajouter un Pokémon si l'équipe a moins de 6 Pokémon
-        if len(team_pokemon_id) < 6:
-            pokemon_id = int(request.GET.get('pokemon_id', 0))
-            if pokemon_id not in team_pokemon_id:
-                team_pokemon_id.append(pokemon_id)  # Ajouter l'ID du Pokémon
-                print(f"Pokemon {pokemon_id} ajouté")
-        else:
-            print("L'équipe a déjà 6 Pokémon")
-
-    current_team['pokemon'] = team_pokemon_id  # Mise à jour de current_team
-    cache.set('team_data', teams)  # Mise à jour du cache
-
-    pokemon_data_team = get_pokemon_data_team(team_id)  # Données des Pokémon de l'équipe actuelle
+    cache.set('team_data', teams)
+    pokemon_data_team = filter_pokemon_by_ids(pokemon_data, current_team['pokemon'])
     return render(request, 'detail_team.html',
                   {'team': current_team, 'pokemon_data': pokemon_data, 'pokemon_data_team': pokemon_data_team})
 
 
-# Vue pour debug mes données en cache, accessible via l'URL /cache_data
+# Vue pour debug les données en cache, accessible via l'URL /cache_data
 def cache_data(request):
     team_data = cache.get('team_data')
     pokemon_data = cache.get('pokemon_data')
     return render(request, 'cache_data.html', {'team_data': team_data, 'pokemon_data': pokemon_data})
-
-
-# Il faut revoir les fonctions dans l'application pour async await.
-# Fonction synchrone pour obtenir les données Pokémon
-@sync_to_async
-def get_pokemon_data_sync():
-    return fetch_pokemon_data()
