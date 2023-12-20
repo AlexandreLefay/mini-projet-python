@@ -1,3 +1,5 @@
+from random import random, uniform
+
 from MonApplication.function.cache_data import get_cached_pokemon_data
 from MonApplication.function.cache_data import get_cached_team_data
 from MonApplication.function.manage_team import get_pokemon_data_team
@@ -55,8 +57,11 @@ async def team(request):
             current_id = cache.get('current_team_id', 0)
             current_id += 1
 
+            # Choisit un background au hasard
+            background = round(uniform(1, 8))
+
             # Ajouter le nouveau teamName et l'ID au tableau
-            team_data.append({'id': current_id, 'teamName': team_name, 'pokemon': []})
+            team_data.append({'id': current_id, 'teamName': team_name, 'pokemon': [], 'background': "background_"+str(background)})
 
             # Mise à jour du cache avec le nouveau tableau et l'ID
             cache.set('team_data', team_data, timeout=3600)

@@ -11,15 +11,24 @@
     </head>
     <body>
         <h1>Vos équipes</h1>
-        <button onclick="window.location.href='http://localhost:8000'">
-            Go to home
-        </button>
-        <button onclick="window.location.href='http://localhost:8000/pokedex/'">
-            Go to pokedex
-        </button>
-        <button onclick="window.location.href='http://localhost:8000/cache_data/'">
-            Les données en cache
-        </button>
+        <div class="links-container">
+            <div class="box-container">
+                <button onclick="window.location.href='http://localhost:8000'" class="open-button">
+                    Go to home
+                </button>
+            </div>
+            <div class="box-container">
+                <button onclick="window.location.href='http://localhost:8000/pokedex/'" class="open-button">
+                    Go to pokedex
+                </button>
+            </div>
+            <div class="box-container">
+                <button onclick="window.location.href='http://localhost:8000/cache_data/'" class="open-button">
+                    Les données en cache
+                </button>
+            </div>
+        </div>
+        <br>
 
         {% if team_data %}
             <ul>
@@ -36,8 +45,10 @@
         {% endif %}
         </ul>
 
-        <div class="open-btn">
-            <button class="open-button" onclick="openForm()"><strong>Créer une équipe</strong></button>
+        <div class="box-container">
+            <div class="open-btn box-container"">
+                <button class="open-button" onclick="openForm()"><strong>Créer une équipe</strong></button>
+            </div>
         </div>
         <div class="login-popup">
             <div id="popupForm" class="form-popup">

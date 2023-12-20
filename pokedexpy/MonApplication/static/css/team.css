@@ -3,13 +3,18 @@
 * {
   box-sizing: border-box;
 }
+
+.box-container {
+    display: flex;
+    align-items: center;
+}
 body {
   font-family: Roboto, Helvetica, sans-serif;
 }
 /* Fixer le bouton sur le côté gauche de la page */
 .open-btn {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center ;
 }
 /* Stylez et fixez le bouton sur la page */
 .open-button {
@@ -20,7 +25,6 @@ body {
   border-radius: 5px;
   cursor: pointer;
   opacity: 0.8;
-  position: fixed;
 }
 /* Positionnez la forme Popup */
 .login-popup {
@@ -79,3 +83,4 @@ body {
 .open-button:hover {
   opacity: 1;
 }
+
