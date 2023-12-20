@@ -61,7 +61,10 @@ async def team(request):
             background = round(uniform(1, 8))
 
             # Ajouter le nouveau teamName et l'ID au tableau
-            team_data.append({'id': current_id, 'teamName': team_name, 'pokemon': [], 'background': "background_"+str(background)})
+            team_data.append({'id': current_id,
+                              'teamName': team_name,
+                              'pokemon': [],
+                              'background': "background_"+str(background)+".svg"})
 
             # Mise à jour du cache avec le nouveau tableau et l'ID
             cache.set('team_data', team_data, timeout=3600)

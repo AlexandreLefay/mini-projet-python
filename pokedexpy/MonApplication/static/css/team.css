@@ -84,3 +84,17 @@ body {
   opacity: 1;
 }
 
+.card_team{
+  text-decoration: none;
+  color: #cccccc;
+  border-radius: 15px;
+  Width: 328px;
+  Height:102px;
+  Top:425px;
+  Left:16px;
+  padding:15px;
+  margin: 15px;
+}
+.card_team>.label-btn{
+  font-size: 2em;
+}

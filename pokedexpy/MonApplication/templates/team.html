@@ -35,10 +35,12 @@
             <ul>
                 {% for team in team_data %}
                     <li>
-                        <a href="{% url 'detail_team' team.id %}"
-                        >{{ team.teamName }}#{{ team.id }}</a
-                        >
-                        <a href="{{ request.path }}?team_id={{ team.id }}">DELETE</a>
+                        <button onclick="window.location.href='http://localhost:8000/team/{{ team.id }}'"
+                           class="card_team"
+                           style="background-image: url('{% static "img/teams_img/"%}{{ team.background }}')">
+                            <strong class="label-btn">{{ team.teamName }}</strong>
+                            <a href="{{ request.path }}?team_id={{ team.id }}">DELETE</a>
+                        </button>
                     </li>
                 {% endfor %}
             </ul>
