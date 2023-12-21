@@ -1,0 +1,17 @@
+{% load static %}
+<div class="navbar">
+    <img class="logo" src="{% static 'img/pokeball-pokemon-svgrepo-com.svg' %}" alt="pokeball logo" />
+    <ul class="nav-links">
+        <li><a href="http://localhost:8000">Home</a></li>
+        <li><a href="http://localhost:8000/team/">Team</a></li>
+        <li><a href="http://localhost:8000/pokedex/">Pokedex</a></li>
+        <li><a href="http://localhost:8000/cache_data/">Cache</a></li>
+    </ul>
+    <div class="search-container">
+        <form method="get" action="{% url 'pokedex' %}">
+            <input type="text" name="search" placeholder="Search pokemon..." />
+            <button type="submit">Search</button>
+            <button href="{% url 'pokedex' %}" class="reset-button">Reset</button>
+        </form>
+    </div>
+</div>

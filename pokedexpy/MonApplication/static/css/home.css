@@ -1,29 +1,82 @@
 @import "global_css.css";
+
+:root {
+    --primary-color: #3498db;
+    --secondary-color: #2ecc71;
+}
+
+
+body {
+    font-family: "PokemonFont", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+    background-image: url('../img/village.jpg');
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+
 .logo-container {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 20px;
+    z-index: 2;
 }
+
 
 .links-container {
     display: flex;
     justify-content: center;
+    z-index: 2;
 }
+
+
+
+body {
+    position: relative;
+}
+
 .box-container {
     display: flex;
     align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    z-index: 999;
+    margin-bottom: 87px;
 }
 
-.menu {
 
+
+
+.menu {
     display: flex;
     align-items: center;
     justify-content: center;
-
     width: 480px;
     height: 102px;
     flex-shrink: 0;
+    background-color: var(--primary-color);
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
     background: url("../img/box_menu.svg");
+    margin-right: 10px;
+
+}
+
+.menu:hover {
+    background-color: #f0f0f0;
 }
 
 a {
@@ -31,12 +84,24 @@ a {
     color: inherit;
 }
 
+
 @font-face {
     font-family: "PokemonFont";
-    src: url("../fonts/pkmnFont.ttf");
+    src: url("../fonts/pkmnFont.ttf") format("truetype");
+    font-display: swap;
 }
 
-body {
-    font-family: "PokemonFont", Arial, sans-serif;
+
+#imageContainer {
+    flex: 1;
+    position: relative;
+    z-index: 1;
 }
 
+
+#movingImage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: top 0.2s, left 0.2s;
+}

@@ -212,9 +212,6 @@ body {
     float: right;
 }
 
-.pokemon-name {
-}
-
 .pokemon-popup {
     position: fixed;
     right: 10px;
@@ -245,6 +242,7 @@ body {
     font-size: 20px;
     cursor: pointer;
 }
+
 
 .navbar {
     background-color: #333;
@@ -314,6 +312,7 @@ body {
     /* Pour compenser la hauteur de la navbar fixée */
     padding: 20px;
 }
+
 
 
 .pokemon-card {
