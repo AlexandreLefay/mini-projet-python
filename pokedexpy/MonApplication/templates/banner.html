@@ -1,0 +1,64 @@
+{% load static %}
+<div class="pokemon-card-banner">
+
+    <div class="type-svg">
+        {% with "img/types/"|add:current_pokemon.types.0|add:".svg" as img_path %}
+            <img src="{% static img_path %}" alt="{{ current_pokemon.name }}">
+        {% endwith %}
+
+    </div>
+
+    <div class="pokemon-profile">
+        <img src="{{ current_pokemon.sprite_front }}" alt="{{ current_pokemon.name }}"
+             style="width:150px;height:150px;">
+    </div>
+
+    <div class="pokemon-header">
+        <h1>{{ current_pokemon.name|title }}</h1>
+        <h3>#{{ current_pokemon.id }}</h3>
+    </div>
+
+    <div class="pokemon-type-banner">
+        {% for type in current_pokemon.types %}
+            <div class="info-box-type">
+                <p>{{ type }}</p>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="pokemon-description">
+        <p>{{ current_pokemon_description }}</p>
+    </div>
+
+    <div class="pokemon-size">
+        <div class="info-container">
+            <div class="info-text">Poids</div>
+            <div class="info-box">
+                <div class="icon">👜</div>
+                <div class="info-value">{{ current_pokemon.weight }} kg</div>
+            </div>
+
+            <div class="info-text">Taille</div>
+            <div class="info-box">
+                <div class="icon">📏</div>
+                <div class="info-value">{{ current_pokemon.height }} m</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pokemon-attributes">
+        <div class="attribute">
+            <span>Capacités:</span> {{ current_pokemon.moves.5|title }}, {{ current_pokemon.moves.2|title }}</div>
+    </div>
+    <div class="arrow-container">
+        <a href="{% url 'pokedex' %}?pokemon_id={{ current_pokemon.id|add:'-1' }}" class="arrow-link">
+            <i class="fas fa-chevron-left arrow"></i>
+        </a>
+        <a href="{% url 'pokedex' %}?pokemon_id={{ current_pokemon.id|add:'1' }}" class="arrow-link">
+            <i class="fas fa-chevron-right arrow arrow-right"></i>
+        </a>
+    </div>
+
+
+</div>
+

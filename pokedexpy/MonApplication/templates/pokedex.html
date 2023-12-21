@@ -8,6 +8,13 @@
             type="text/css"
             href="{% static 'css/pokedex.css' %}"
     />
+    <link
+            rel="stylesheet"
+            type="text/css"
+            href="{% static 'css/banner.css' %}"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 </head>
 <script src="{% static 'js/pokedex.js' %}"></script>
 <body>
@@ -29,33 +36,8 @@
         </form>
     </div>
 </div>
-
-
-<div class="sidebar">
-    <div class="sidebar-content">
-        {% with "img/types/"|add:current_pokemon.types.0|add:".svg" as img_path %}
-            <img src="{% static img_path %}" alt="{{ current_pokemon.name }}" class="pokemon-type-modal">
-        {% endwith %}
-        <img src="{{ current_pokemon.sprite_front }}" alt="{{ current_pokemon.name }}" class="pokemon-image">
-        <h2 class="pokemon-detail">{{ current_pokemon.name|title }} #{{ current_pokemon.id }}</h2>
-        <p>{{ current_pokemon_description }}</p>
-        <div class="pokemon-detail-ability">
-            <div class="pokemon-detail">Poids: {{ current_pokemon.weight }} Kg</div>
-            <div class="pokemon-detail">Taille: {{ current_pokemon.height }} Cm</div>
-            <div class="pokemon-detail">HP : {{ current_pokemon.hp }}</div>
-            <div class="pokemon-detail">
-                Abilité: {{ current_pokemon.moves.5|title }}, {{ current_pokemon.moves.2|title }}</div>
-            {% for type in current_pokemon.types %}
-                <div class="pokemon-type">{{ type }}</div>
-            {% endfor %}
-        </div>
-
-        <div class="navigation">
-            <a href="{% url 'pokedex' %}?pokemon_id={{ current_pokemon.id|add:'-1' }}">&#8592;</a>
-            <!-- Flèche gauche -->
-            <a href="{% url 'pokedex' %}?pokemon_id={{ current_pokemon.id|add:'1' }}">&#8594;</a> <!-- Flèche droite -->
-        </div>
-    </div>
+<div class="banner">
+    {% include 'banner.html' %}
 </div>
 <div class="main-content">
     {% include 'collection.html' %}

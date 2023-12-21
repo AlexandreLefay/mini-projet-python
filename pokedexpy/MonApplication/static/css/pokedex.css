@@ -125,7 +125,7 @@ body {
 
 .main-content {
     display: flex;
-    margin-left: 260px;
+    margin-left: 330px;
 }
 
 .sidebar {
@@ -176,7 +176,7 @@ body {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 2vh;
-    background-color: #f0f8ff;
+    /*background-color: #f0f8ff;*/
 }
 
 .collection-item {
@@ -365,19 +365,17 @@ body {
     margin-top: 40px;
 }
 
-.sidebar {
-    height: 70%;
-    width: 240px;
-    position: fixed;
-    z-index: 10;
-    top: 150px;
-    left: 25px;
-    background-color: #fff;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
-    border-radius: 15px;
-    overflow: hidden;
-    padding: 20px;
-}
+/*.sidebar {*/
+/*    position: fixed;*/
+/*    z-index: 10;*/
+/*    top: 150px;*/
+/*    left: 25px;*/
+/*    background-color: #fff;*/
+/*    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);*/
+/*    border-radius: 15px;*/
+/*    overflow: hidden;*/
+/*    padding: 20px;*/
+/*}*/
 
 .sidebar-content {
     display: flex;
@@ -447,9 +445,4 @@ body {
 
 .a {
     text-decoration: none
-
 }
-
-/* body {
-    background-color: #f2fcfb;
-} */
