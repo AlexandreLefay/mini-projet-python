@@ -1,12 +1,7 @@
-@import "global_css.css";
+
 
 * {
   box-sizing: border-box;
-}
-
-.box-container {
-    display: flex;
-    align-items: center;
 }
 body {
   font-family: Roboto, Helvetica, sans-serif;
@@ -41,6 +36,7 @@ body {
   transform: translate(-45%, 5%);
   border: 2px solid #666;
   z-index: 9;
+  vertical-align: middle;
 }
 /* Styles pour le conteneur de forme */
 .form-container {
@@ -50,8 +46,7 @@ body {
 }
 
 /* Largeur complète pour les champs de saisie */
-.form-container input[type="text"],
-.form-container input[type="password"] {
+.form-container input[type="text"]{
   width: 100%;
   padding: 10px;
   margin: 5px 0 22px 0;
@@ -89,22 +84,77 @@ body {
   text-decoration: none;
   color: #cccccc;
   border-radius: 15px;
-  Width: 328px;
-  Height:102px;
-  Top:425px;
+  Width: 33vw;
+  height: auto;
   Left:16px;
   padding:15px;
   margin: 15px;
 }
 .card_team>.label-btn{
-  font-size: 2em;
+font-family: Arial;
+font-size: 50px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
 }
 .ul-card{
+  display: inline-flex;
+  flex-wrap: wrap;
   list-style-type: none;
+}
+.li-card{
+  display: inline-flex;
 }
 .mini-pokemon{
   width: 50px;
 }
+.first-level-container{
+    display: inline-flex;
+    justify-content: center;
+}
+.first-level-container-vertical{
+    display: flex;
+    justify-content: center;
+     flex-direction: column;
+}
+.box-container {
+    display: inline-flex;
+    align-items: center;
+    margin: 2em;
+}
+.card-ligne1{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.card-ligne1{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
 
+.create-bar {
+    background-color: #333;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    align-content: center;
+    align-items: center;
+    z-index: 500;
+    text-align: center;
+}
 
+.create-bar p {
+    display: inline-block;
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.2em;
+    align-items: center;
+}
 
+.create-bar p:hover {
+    color: #a4a4a4;
+    border-bottom: 2px solid #7a7a7a;
+}
