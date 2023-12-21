@@ -21,30 +21,6 @@
 </head>
 <body>
     {% include 'navbar.html' %}
-    <h1>Vos équipes</h1>
-        <div class="links-container">
-            <div class="box-container">
-                <button onclick="window.location.href='http://localhost:8000'" class="open-button">
-                    Go to home
-                </button>
-            </div>
-            <div class="box-container">
-                <button onclick="window.location.href='http://localhost:8000/pokedex/'" class="open-button">
-                    Go to pokedex
-                </button>
-            </div>
-            <div class="box-container">
-                <button onclick="window.location.href='http://localhost:8000/team/'" class="open-button">
-                    Go to teams
-                </button>
-            </div>
-            <div class="box-container">
-                <button onclick="window.location.href='http://localhost:8000/cache_data/'" class="open-button">
-                    Les données en cache
-                </button>
-            </div>
-        </div>
-        <br>
         {% for pokemon in pokemon_data_team %}
         <div class="pokemon-card {{ pokemon.types.0 }}">
             <div class="card-left">
