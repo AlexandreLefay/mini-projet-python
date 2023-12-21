@@ -1,52 +1,46 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Home</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}" />
-    <style>
-      #imageContainer {
-        position: relative;
-      }
 
-      #movingImage {
-        position: absolute;
-        top: 0;
-        left: 0;
-        transition: top 0.2s, left 0.2s;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="logo-container">
-      <img src="{% static 'img/pokemonlogo.svg' %}" alt="pokemon logo" />
-      <img src="{% static 'img/pokedex.svg' %}" alt="pokedex logo" />
-    </div>
+<head>
+  <title>Home</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}" />
+  <style>
+    #imageContainer {
+      position: relative;
+    }
 
-    <div class="links-container">
-      <div class="box-container">
-        <a href="/pokedex">
-          <div class="menu">
-            <div>pokedex</div>
-          </div>
-        </a>
-      </div>
+    #movingImage {
+      position: absolute;
+      top: 0;
+      left: 0;
+      transition: top 0.2s, left 0.2s;
+    }
+  </style>
+</head>
 
-      <div class="box-container">
-        <a href="/team">
-          <div class="menu">
-            <div>teams</div>
-          </div>
-        </a>
-      </div>
-    </div>
-    <div id="imageContainer">
-      <img
-        id="movingImage"
-        src="{% static 'img/sprite_charactere/ashdown1.svg' %}"
-        alt="Image"
-      />
-    </div>
-    <script src="{% static 'js/home.js' %}"></script>
-  </body>
+<body>
+  <div class="logo-container">
+    <img src="{% static 'img/pokemonlogo.svg' %}" alt="pokemon logo" />
+    <!-- <img src="{% static 'img/pokedex.svg' %}" alt="pokedex logo" /> -->
+  </div>
+
+  <div class="box-container">
+    <a href="/pokedex" class="menu">
+      <div>pokedex</div>
+    </a>
+
+    <a href="/team" class="menu">
+      <div>teams</div>
+    </a>
+  </div>
+
+
+
+  <div id="imageContainer">
+    <img id="movingImage" src="{% static 'img/sprite_charactere/ashdown1.svg' %}" alt="Image" />
+  </div>
+  <script src="{% static 'js/home.js' %}"></script>
+</body>
+
 </html>
