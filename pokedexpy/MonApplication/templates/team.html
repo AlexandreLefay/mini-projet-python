@@ -18,46 +18,54 @@
         {% include 'navbar.html' %}
         <h1>Vos équipes</h1>
 
-        {% if team_data %}
-            <ul class="ul-card collection-grid">
-                {% for team in team_data %}
-                    <li class="li-card">
-                        <div onclick="window.location.href='http://localhost:8000/team/{{ team.id }}'"
-                            class="card_team"
-                            style="background-image: url('{% static "img/teams_img/"%}{{ team.background }}');
-                            background-size: cover;">
-                            <div class="card-titre">
-                                <div class="first-level-container">
-                                    <div class="box-container label-btn">
-                                       {{ team.teamName }}
+
+        <ul class="ul-card">
+            {% for team in team_data %}
+                <li class="li-card">
+                    <div onclick="window.location.href='http://localhost:8000/team/{{ team.id }}'"
+                        class="card_team"
+                        style="background-image: url('{% static "img/teams_img/"%}{{ team.background }}');
+                        background-size: cover;">
+
+                        <div class="card-titre">
+                            <div class="container-vertical">
+                                <div class="container-horizontal">
+                                    <div class=" label-btn">
+                                       <p class="label-btn-upper">{{ team.teamName }}</p>
                                     </div>
-                                    <div class="box-container">
-                                        <a href="{{ request.path }}?team_id={{ team.id }}">DELETE</a>
-                                    </div>
-                                </div>
-                                <div class="first-level-container">
-                                    <div class="mini-pokemon box-container">
-                                        {% for pokemon in team.pokemon %}
-                                            {% for pok in pokemon_data  %}
-                                                {% if pok.id == pokemon %}
-                                                    <img src="{{ pok.sprite_front }}" class="mini-pokemon" alt="{{ pok.name }}"/>
-                                                {% endif %}
-                                            {% endfor %}
-                                        {% endfor %}
+                                    <div class="label-btn">
+                                        <a class="label-btn-link"href="{{ request.path }}?team_id={{ team.id }}"
+                                            title="Supprimer cette équipe">X</a>
                                     </div>
                                 </div>
                             </div>
+                            <div class="container-vertical">
+                                <div class="container-horizontal container-list">
+                                    {% if not team.pokemon %}
+                                    	<div class=" label-btn">
+                                           Cette équipe est vide
+                                        </div>
+                                    {% endif %}
+                                    {% for pokemon in team.pokemon %}
+                                        {% for pok in pokemon_data  %}
+                                            {% if pok.id == pokemon %}
+                                                <img src="{{ pok.sprite_front }}" class="mini-pokemon" alt="{{ pok.name }}"/>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endfor %}
+                                </div>
+                            </div>
                         </div>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% endif %}
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
 
         <div class="create-bar">
             <p onclick="openForm()">Créer une équipe</p>
         </div>
 
-        <div class="login-popup">
+        <div class="add-popup">
             <div id="popupForm" class="form-popup">
                 <form onsubmit="{{ request.path }}" method="post" id="teamForm" class="form-container">
                     {% csrf_token %}
@@ -71,14 +79,17 @@
             </div>
         </div>
 
+
         <script>
             function openForm() {
                 document.getElementById("popupForm").style.display = "block";
-              }
+            }
             function closeForm() {
                 document.getElementById("popupForm").style.display = "none";
                 document.getElementById("popupForm").reset();
-                }
+            }
+
+
         </script>
 
     </body>
