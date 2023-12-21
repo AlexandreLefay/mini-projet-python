@@ -46,26 +46,33 @@
         </div>
         <br>
         {% for pokemon in pokemon_data_team %}
-            <div class="collection-grid">
-                <div class="pokemon-card">
-                    <div class="collection-item">
-                        <div>#{{ pokemon.id }}</div>
-                        <img
-                                src="{{ pokemon.sprite_front }}"
-                                alt="{{ pokemon.name }} sprite"
-                        />
-                    </div>
-                    <form action="{{ request.path }}" method="post">
-                        {% csrf_token %}
-                        <input type="hidden" name="pokemon_id" value="{{ pokemon.id }}">
-                        <input type="submit" value="Supprimer">
-                    </form>
+        <div class="pokemon-card {{ pokemon.types.0 }}">
+            <div class="card-left">
+                <div class="pokemon-id">N°{{ pokemon.id }}</div>
+                <div class="pokemon-name">{{ pokemon.name|title }}</div>
+                <div class="pokemon-types">
+                    {% for type in pokemon.types %}
+                        <div class="pokemon-type">{{ type }}</div>
+                    {% endfor %}
                 </div>
             </div>
+            <div class="card-right">
+                <img
+                        class="pokemon-sprite"
+                        src="{{ pokemon.sprite_front }}"
+                        alt="{{ pokemon.name }} sprite"
+                />
+            </div>
+        </div>
+        <form action="{{ request.path }}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="pokemon_id" value="{{ pokemon.id }}">
+            <input type="submit" value="Supprimer">
+        </form>
         {% endfor %}
         <div class="collection-grid">
             {% for pokemon in pokemon_data %}
-            <a href="{{ request.path }}?pokemon_id={{ pokemon.id }}">
+            <a href="{{ request.path }}?pokemon_id={{ pokemon.id }}" class="pokemon-card-link">
                 <div class="pokemon-card {{ pokemon.types.0 }}">
                     <div class="card-left">
                         <div class="pokemon-id">N°{{ pokemon.id }}</div>

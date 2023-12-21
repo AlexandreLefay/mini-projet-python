@@ -1,5 +1,6 @@
 import asyncio
 import aiohttp
+import requests
 
 # Constantes
 POKEMON_API_URL = "https://pokeapi.co/api/v2/pokemon/"
@@ -41,6 +42,25 @@ def extract_pokemon_info(pokemon_data):
         'id': pokemon_data['id'],
         'types': [t['type']['name'] for t in pokemon_data['types']],
         'height': pokemon_data['height'],
+        'weight': pokemon_data['weight'],
         'hp': pokemon_data['stats'][0]['base_stat'],
         'moves': [move['move']['name'] for move in pokemon_data['moves']]
     }
+
+# Récupération de la description du pokemon par son id.
+async def get_pokemon_description(pokemon_id):
+    species_url = f"https://pokeapi.co/api/v2/pokemon-species/{pokemon_id}/"
+
+    async with aiohttp.ClientSession() as session:
+        async with session.get(species_url) as response:
+            if response.status != 200:
+                return "Erreur lors de la récupération des données de l'espèce du Pokémon."
+
+            species_data = await response.json()
+
+            # Recherche de la description en français
+            for flavor_text_entry in species_data['flavor_text_entries']:
+                if flavor_text_entry['language']['name'] == 'fr':
+                    return flavor_text_entry['flavor_text'].replace('\n', ' ').replace('\f', ' ')
+
+            return "Description en français non trouvée."

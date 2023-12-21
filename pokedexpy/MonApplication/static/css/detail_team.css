@@ -1,8 +1,10 @@
 @import "global_css.css";
+
 .links-container {
     display: flex;
     justify-content: center;
 }
+
 .box-container {
     display: flex;
     align-items: center;
@@ -27,6 +29,7 @@
     margin: 0 auto;
     max-width: 1200px;
 }
+
 .popup {
     display: none;
     position: fixed;
@@ -38,6 +41,7 @@
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
+
 .pokemon-card {
     cursor: pointer;
 }
@@ -74,9 +78,7 @@ body {
     justify-content: center;
 }
 
-.pokemon-info
-    .pokemon-selected-image-container
-    .pokemon-selected-background {
+.pokemon-info .pokemon-selected-image-container .pokemon-selected-background {
     width: 100%;
 }
 
@@ -133,6 +135,7 @@ body {
     border: none;
     cursor: pointer;
 }
+
 .poke-container {
     align-items: space-between;
     display: flex;
@@ -141,6 +144,7 @@ body {
     margin: 0 auto;
     max-width: 1200px;
 }
+
 .popup {
     display: none;
     position: fixed;
@@ -152,6 +156,7 @@ body {
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
+
 .pokemon-card {
     cursor: pointer;
 }
