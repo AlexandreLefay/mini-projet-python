@@ -4,6 +4,7 @@ from MonApplication.function.cache_data import get_cached_pokemon_data
 from MonApplication.function.cache_data import get_cached_team_data
 from MonApplication.function.filter import filter_pokemon_by_ids
 from MonApplication.function.filter import filter_pokemon_by_query
+from MonApplication.request.get_pokemon import get_pokemon_description
 from django.core.cache import cache
 from django.shortcuts import render, redirect
 
@@ -21,10 +22,19 @@ def home(request):
 # Vue asynchrone pour afficher les données du Pokédex.
 async def pokedex(request):
     pokemon_data = await get_cached_pokemon_data()
-    pokemon_id = request.GET.get('pokemon_id', 1)
+    if request.method == 'GET':
+        pokemon_id = request.GET.get('pokemon_id', 1)
+        print(pokemon_id)
+    elif request.method == 'POST':
+        pokemon_id = request.GET.get('pokemon_id', 1)
+        print(pokemon_id)
     current_pokemon = next((pokemon for pokemon in pokemon_data if pokemon['id'] == int(pokemon_id)), pokemon_data[0])
+    current_pokemon_description = await get_pokemon_description(pokemon_id)
+    print(current_pokemon_description)
     pokemon_data = filter_pokemon_by_query(pokemon_data, request)
-    return render(request, 'pokedex.html', {'current_pokemon': current_pokemon, 'pokemon_data': pokemon_data})
+    return render(request, 'pokedex.html',
+                  {'current_pokemon': current_pokemon, 'current_pokemon_description': current_pokemon_description,
+                   'pokemon_data': pokemon_data})
 
 
 # Vue pour afficher nos équipes Pokémon
