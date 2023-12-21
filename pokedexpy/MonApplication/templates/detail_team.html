@@ -65,7 +65,7 @@
         {% endfor %}
         <div class="collection-grid">
             {% for pokemon in pokemon_data %}
-            <a href="{{ request.path }}?pokemon_id={{ pokemon.id }}">
+            <a href="{{ request.path }}?pokemon_id={{ pokemon.id }}" class="pokemon-card-link">
                 <div class="pokemon-card {{ pokemon.types.0 }}">
                     <div class="card-left">
                         <div class="pokemon-id">N°{{ pokemon.id }}</div>

@@ -5,17 +5,20 @@
 }
 
 .box-container {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
+
 body {
   font-family: Roboto, Helvetica, sans-serif;
 }
+
 /* Fixer le bouton sur le côté gauche de la page */
 .open-btn {
   display: flex;
-  justify-content: center ;
+  justify-content: center;
 }
+
 /* Stylez et fixez le bouton sur la page */
 .open-button {
   background-color: #1c87c9;
@@ -26,12 +29,14 @@ body {
   cursor: pointer;
   opacity: 0.8;
 }
+
 /* Positionnez la forme Popup */
 .login-popup {
   position: relative;
   text-align: center;
   width: 100%;
 }
+
 /* Masquez la forme Popup */
 .form-popup {
   display: none;
@@ -42,6 +47,7 @@ body {
   border: 2px solid #666;
   z-index: 9;
 }
+
 /* Styles pour le conteneur de forme */
 .form-container {
   max-width: 300px;
@@ -58,12 +64,14 @@ body {
   border: none;
   background: #eee;
 }
+
 /*Quand les entrées sont concentrées, faites quelque chose */
 .form-container input[type="text"]:focus,
 .form-container input[type="password"]:focus {
   background-color: #ddd;
   outline: none;
 }
+
 /* Stylez le bouton de connexion*/
 .form-container .btn {
   background-color: #8ebf42;
@@ -75,36 +83,43 @@ body {
   margin-bottom: 10px;
   opacity: 0.8;
 }
+
 /* Stylez le bouton pour annuler */
 .form-container .cancel {
   background-color: #cc0000;
 }
+
 /* Planez les effets pour les boutons */
 .form-container .btn:hover,
 .open-button:hover {
   opacity: 1;
 }
 
-.card_team{
+.pokemon-card-link {
+  text-decoration: none;
+  color: black;
+}
+
+.card_team {
   text-decoration: none;
   color: #cccccc;
   border-radius: 15px;
   Width: 328px;
-  Height:102px;
-  Top:425px;
-  Left:16px;
-  padding:15px;
+  Height: 102px;
+  Top: 425px;
+  Left: 16px;
+  padding: 15px;
   margin: 15px;
 }
-.card_team>.label-btn{
+
+.card_team>.label-btn {
   font-size: 2em;
 }
-.ul-card{
+
+.ul-card {
   list-style-type: none;
 }
-.mini-pokemon{
+
+.mini-pokemon {
   width: 50px;
 }
-
-
-
