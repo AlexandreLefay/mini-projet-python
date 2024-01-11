@@ -313,11 +313,27 @@ body {
     padding: 20px;
 }
 
+.team-wrapper {
+    margin-top: 130px;
+    display: flex;
+    justify-content: flex-start; /* Centrer les éléments horizontalement */
+    flex-wrap: wrap; /* Permettre aux éléments de passer à la ligne suivante si nécessaire */
+    gap: 20px; /* Espace entre les cartes Pokémon */
+}
 
+.pokemon-item {
+    width: 300px; /* ou toute autre largeur appropriée */
+    margin-bottom: 20px; /* Espace entre les ensembles de cartes et boutons */
+}
+
+.delete-button {
+    text-align: center; /* Centrer le bouton si nécessaire */
+
+}
 
 .pokemon-card {
     cursor: pointer;
-    display: flex;
+    display: inline-block;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -389,13 +405,13 @@ body {
     font-size: 24px;
 }
 
-.sidebar p {
+/* .sidebar p {
 {
     #padding: 6px 8px 6px 16px;
 
 } text-align: justify;
     color: #818181;
-}
+} */
 
 /* Style for the Pokémon image */
 .pokemon-image {
