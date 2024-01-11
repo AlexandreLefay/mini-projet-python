@@ -4,6 +4,8 @@
 
 body {
     font-family: Roboto, Helvetica, sans-serif;
+    background-color: #f0f0f0;
+
 }
 h1{
     padding-top: 35px;
@@ -151,6 +153,10 @@ h1{
     align-items: center;
     z-index: 500;
     text-align: center;
+}
+
+.create-team-wrapper{
+    margin-top: 50px;
 }
 
 .create-bar p {

@@ -16,50 +16,50 @@
     </head>
     <body>
         {% include 'navbar.html' %}
-        <h1>Vos équipes</h1>
-
-
-        <ul class="ul-card">
-            {% for team in team_data %}
-                <li class="li-card">
-                    <div onclick="window.location.href='http://localhost:8000/team/{{ team.id }}'"
-                        class="card_team"
-                        style="background-image: url('{% static "img/teams_img/"%}{{ team.background }}');
-                        background-size: cover;">
-
-                        <div class="card-titre">
-                            <div class="container-vertical">
-                                <div class="container-horizontal">
-                                    <div class=" label-btn">
-                                       <p class="label-btn-upper">{{ team.teamName }}</p>
-                                    </div>
-                                    <div class="label-btn">
-                                        <a class="label-btn-link"href="{{ request.path }}?team_id={{ team.id }}"
-                                            title="Supprimer cette équipe">X</a>
+        <div class="create-team-wrapper">
+            <h1>Vos équipes</h1>
+            <ul class="ul-card">
+                {% for team in team_data %}
+                    <li class="li-card">
+                        <div onclick="window.location.href='http://localhost:8000/team/{{ team.id }}'"
+                            class="card_team"
+                            style="background-image: url('{% static "img/teams_img/"%}{{ team.background }}');
+                            background-size: cover;">
+    
+                            <div class="card-titre">
+                                <div class="container-vertical">
+                                    <div class="container-horizontal">
+                                        <div class=" label-btn">
+                                           <p class="label-btn-upper">{{ team.teamName }}</p>
+                                        </div>
+                                        <div class="label-btn">
+                                            <a class="label-btn-link"href="{{ request.path }}?team_id={{ team.id }}"
+                                                title="Supprimer cette équipe">X</a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="container-vertical">
-                                <div class="container-horizontal container-list">
-                                    {% if not team.pokemon %}
-                                    	<div class=" label-btn">
-                                           Cette équipe est vide
-                                        </div>
-                                    {% endif %}
-                                    {% for pokemon in team.pokemon %}
-                                        {% for pok in pokemon_data  %}
-                                            {% if pok.id == pokemon %}
-                                                <img src="{{ pok.sprite_front }}" class="mini-pokemon" alt="{{ pok.name }}"/>
-                                            {% endif %}
+                                <div class="container-vertical">
+                                    <div class="container-horizontal container-list">
+                                        {% if not team.pokemon %}
+                                            <div class=" label-btn">
+                                               Cette équipe est vide
+                                            </div>
+                                        {% endif %}
+                                        {% for pokemon in team.pokemon %}
+                                            {% for pok in pokemon_data  %}
+                                                {% if pok.id == pokemon %}
+                                                    <img src="{{ pok.sprite_front }}" class="mini-pokemon" alt="{{ pok.name }}"/>
+                                                {% endif %}
+                                            {% endfor %}
                                         {% endfor %}
-                                    {% endfor %}
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </li>
-            {% endfor %}
-        </ul>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
 
         <div class="create-bar">
             <p onclick="openForm()">Créer une équipe</p>
