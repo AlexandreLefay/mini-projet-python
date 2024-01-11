@@ -333,6 +333,7 @@ body {
 
 .pokemon-card {
     cursor: pointer;
+    color: black;
     display: inline-block;
     border-radius: 8px;
     overflow: hidden;
