@@ -13,11 +13,14 @@ h1{
 }
 /* Positionnez la forme Popup */
 .add-popup {
-    position: relative;
-    text-align: center;
+    position: fixed;
+    left: 50%;
+    top: 30%;
     width: 100%;
-    transform:translate(0,-50%);
+    transform: translate(-50%, -50%);
+    z-index: 999;
 }
+
 
 /* Masquez la forme Popup */
 .form-popup {
